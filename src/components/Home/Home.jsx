@@ -7,7 +7,7 @@ import { images, profileFallback } from '../../utils/images';
 import heroImage from '/images/ayoub-img.jpg';
 import backgroundImage from '/images/background.jpg';
 
-const HeroSection = styled.section`
+const HomeSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -16,39 +16,75 @@ const HeroSection = styled.section`
   padding: 0 1rem;
 `;
 
-const HeroContainer = styled.div`
+const HomeContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 4rem;
+  padding: 2rem;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     text-align: center;
+    gap: 3rem;
   }
 `;
 
-const HeroContent = styled.div`
+const HomeContent = styled.div`
   flex: 1;
+  max-width: 600px;
   opacity: ${props => props.visible ? 1 : 0};
   transform: translateY(${props => props.visible ? '0' : '20px'});
   transition: all 0.6s ease-out;
 `;
 
-const HeroImageContainer = styled.div`
-  flex: 1;
+const HomeImageContainer = styled.div`
+  flex: 0.8;
   display: flex;
   justify-content: center;
+  align-items: center;
   opacity: ${props => props.visible ? 1 : 0};
   transform: translateY(${props => props.visible ? '0' : '20px'});
   transition: all 0.6s ease-out;
   transition-delay: 0.2s;
+  
+  @media (max-width: 768px) {
+    width: 280px;
+    margin: 0 auto;
+  }
 `;
 
-const HeroImage = styled(LazyImage)`
-  border: 4px solid #4338CA;
+const ImageWrapper = styled.div`
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.83);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  @media (max-width: 768px) {
+    width: 260px;
+    height: 260px;
+  }
+`;
+
+const HomeImage = styled(LazyImage)`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 8px solid rgba(255, 255, 255, 0.83);
 `;
 
 const Title = styled.h1`
@@ -116,7 +152,7 @@ const Button = styled(Link)`
   }
 `;
 
-const Hero = () => {
+const Home = () => {
   const [contentRef, contentInView] = useInView({
     threshold: 0.1,
     triggerOnce: true
@@ -128,9 +164,9 @@ const Hero = () => {
   });
 
   return (
-    <HeroSection id="hero">
-      <HeroContainer>
-        <HeroContent ref={contentRef} visible={contentInView}>
+    <HomeSection id="home">
+      <HomeContainer>
+        <HomeContent ref={contentRef} visible={contentInView}>
           <Title>Hi, I'm <span className="highlight">Ayoub Taouabi</span></Title>
           <Subtitle>A Passionate Junior Data Scientist</Subtitle>
           <Description>
@@ -155,20 +191,23 @@ const Hero = () => {
               Get In Touch
             </Button>
           </ButtonContainer>
-        </HeroContent>
-        <HeroImageContainer ref={imageRef} visible={imageInView}>          <HeroImage
-            src={images.profile}
-            alt="Ayoub Taouabi - Profile Picture"
-            fallback={profileFallback}
-            width="300px"
-            height="300px"
-            borderRadius="50%"
-            objectFit="cover"
-          />
-        </HeroImageContainer>
-      </HeroContainer>
-    </HeroSection>
+        </HomeContent>
+        <HomeImageContainer ref={imageRef} visible={imageInView}>
+          <ImageWrapper>
+            <HomeImage
+              src={images.profile}
+              alt="Ayoub Taouabi - Profile Picture"
+              fallback={profileFallback}
+              width="300px"
+              height="300px"
+              borderRadius="50%"
+              objectFit="cover"
+            />
+          </ImageWrapper>
+        </HomeImageContainer>
+      </HomeContainer>
+    </HomeSection>
   );
 };
 
-export default Hero;
+export default Home;

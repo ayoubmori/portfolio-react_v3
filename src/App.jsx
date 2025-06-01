@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Navbar from './components/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
+import Home from './components/Home/Home';
 import About from './components/About/About';
 import Projects from './components/Projects/Projects';
 import Contact from './components/Contact/Contact';
@@ -19,7 +19,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Navbar />
-      <Hero />
+      <Home />
       <About />
       <Projects />
       <Contact />

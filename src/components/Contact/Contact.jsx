@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
-import emailjs from 'emailjs-com';
+import { sendEmail } from '../../utils/emailjs';
 import Spinner from '../shared/Spinner';
 
 const ContactSection = styled.section`
@@ -220,14 +220,8 @@ const Contact = () => {
     
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      try {
-        // Replace with your EmailJS service ID, template ID, and user ID
-        await emailjs.send(
-          'YOUR_SERVICE_ID',
-          'YOUR_TEMPLATE_ID',
-          formData,
-          'YOUR_USER_ID'
-        );
+      try {        // Use the configured emailjs utility
+        await sendEmail(formData);
         setStatus({ type: 'success', message: 'Message sent successfully!' });
         setFormData({ from_name: '', reply_to: '', message: '' });
       } catch (error) {

@@ -115,9 +115,8 @@ const Navbar = () => {
 
   return (
     <Nav scrolled={scrolled}>
-      <NavContainer>
-        <Logo
-          to="hero"
+      <NavContainer>        <Logo
+          to="home"
           smooth={true}
           duration={500}
           scrolled={scrolled}
@@ -128,8 +127,7 @@ const Navbar = () => {
         <MenuButton onClick={toggleMenu} scrolled={scrolled}>
           <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
         </MenuButton>
-        <NavMenu isOpen={isOpen}>
-          {['hero', 'about', 'projects', 'contact'].map((item) => (
+        <NavMenu isOpen={isOpen}>          {['home', 'about', 'projects', 'contact'].map((item) => (
             <NavItem key={item}>
               <NavLink
                 to={item}
