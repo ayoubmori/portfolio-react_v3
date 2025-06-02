@@ -1,13 +1,22 @@
+import profileImg from '../assets/images/ayoub-img.jpg';
+import backgroundImg from '/images/background.jpg';
+import myScoreImg from '/images/my-score.png';
+import movieAppImg from '/images/movie_app_demo.jpg';
+import breastCancerImg from '/images/breast_canser_app.jpg';
+import coffeeShopImg from '/images/coffe-shop-sales.png';
+import weatherForecastImg from '/images/forcast-app.png';
+import weatherPredictionImg from '/images/predict_weather_model.jpg';
+
 export const images = {
-  profile: '/images/ayoub-img.jpg',
-  background: '/images/background.jpg',
+  profile: profileImg,
+  background: backgroundImg,
   projects: {
-    myScore: '/images/my-score.png',
-    movieApp: '/images/movie_app_demo.jpg',
-    breastCancer: '/images/breast_canser_app.jpg',
-    coffeeShop: '/images/coffe-shop-sales.png',
-    weatherForecast: '/images/forcast-app.png',
-    weatherPrediction: '/images/predict_weather_model.jpg'
+    myScore: myScoreImg,
+    movieApp: movieAppImg,
+    breastCancer: breastCancerImg,
+    coffeeShop: coffeeShopImg,
+    weatherForecast: weatherForecastImg,
+    weatherPrediction: weatherPredictionImg
   }
 };
 

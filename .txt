@@ -1,0 +1,7 @@
+Programming & Scripting :Python ,SQL ,Linux Bash
+Web Development & APIs :Flask,FastAPI,Streamlit
+Data Manipulation :Pandas,NumPy, excel
+Data Visualization :Seaborn,Plotly,Power BI
+Machine Learning : scikit-learn,TensorFlow,Keras
+Web Scraping & Automation : BeautifulSoup,Selenium
+Tools & Platforms :Git,GitHub

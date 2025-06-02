@@ -11,12 +11,12 @@ export const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
     font-size: 16px;
   }
-
   body {
     font-family: ${({ theme }) => theme.typography.fontFamily.sans};
     line-height: 1.6;
     color: ${({ theme }) => theme.colors.text.primary};
-    background-color: ${({ theme }) => theme.colors.background.white};
+    background-color: ${({ theme }) => theme.colors.background.dark};
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {

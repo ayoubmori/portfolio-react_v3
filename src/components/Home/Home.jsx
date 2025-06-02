@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-scroll';
 import { useInView } from 'react-intersection-observer';
-import LazyImage from '../shared/LazyImage';
+import ProfilePicture from '../shared/ProfilePicture';
+import SocialLinks from '../shared/SocialLinks';
 import { images, profileFallback } from '../../utils/images';
 import heroImage from '/images/ayoub-img.jpg';
 import backgroundImage from '/images/background.jpg';
@@ -57,17 +58,8 @@ const HomeImageContainer = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
-  width: 330px;
-  height: 330px;
-  border-radius: 50%;
-  border: 8px solid rgba(255, 255, 255, 0.83);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+const StyledProfilePicture = styled(ProfilePicture)`
   transition: transform 0.3s ease;
-  overflow: hidden;
 
   &:hover {
     transform: translateY(-5px);
@@ -77,14 +69,6 @@ const ImageWrapper = styled.div`
     width: 260px;
     height: 260px;
   }
-`;
-
-const HomeImage = styled(LazyImage)`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 8px solid rgba(255, 255, 255, 0.83);
 `;
 
 const Title = styled.h1`
@@ -109,8 +93,12 @@ const Subtitle = styled.p`
 
 const Description = styled.p`
   color: #fff;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
+`;
+
+const SocialLinksWrapper = styled.div`
+  margin-bottom: 2rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -152,6 +140,10 @@ const Button = styled(Link)`
   }
 `;
 
+const StyledSocialLinks = styled(SocialLinks)`
+  margin-bottom: 2rem;
+`;
+
 const Home = () => {
   const [contentRef, contentInView] = useInView({
     threshold: 0.1,
@@ -173,6 +165,9 @@ const Home = () => {
             Transforming raw data into strategic insights that drive impact. 
             Passionate about analytics, precision, and storytelling through data.
           </Description>
+          <SocialLinksWrapper>
+            <SocialLinks />
+          </SocialLinksWrapper>
           <ButtonContainer>
             <Button
               to="projects"
@@ -191,19 +186,13 @@ const Home = () => {
               Get In Touch
             </Button>
           </ButtonContainer>
-        </HomeContent>
-        <HomeImageContainer ref={imageRef} visible={imageInView}>
-          <ImageWrapper>
-            <HomeImage
-              src={images.profile}
-              alt="Ayoub Taouabi - Profile Picture"
-              fallback={profileFallback}
-              width="300px"
-              height="300px"
-              borderRadius="50%"
-              objectFit="cover"
-            />
-          </ImageWrapper>
+        </HomeContent>        <HomeImageContainer ref={imageRef} visible={imageInView}>
+          <StyledProfilePicture
+            src={images.profile}
+            alt="Ayoub Taouabi - Profile Picture"
+            fallback={profileFallback}
+            size="330px"
+          />
         </HomeImageContainer>
       </HomeContainer>
     </HomeSection>

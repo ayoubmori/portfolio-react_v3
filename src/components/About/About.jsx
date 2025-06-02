@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import LazyImage from '../shared/LazyImage';
+import Tooltip from '../shared/Tooltip';
 import { images, profileFallback } from '../../utils/images';
 
 const AboutSection = styled.section`
@@ -23,10 +24,17 @@ const SectionTitle = styled.h2`
   color: #333;
 `;
 
+const AboutImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+`;
+
 const AboutContent = styled.div`
   display: flex;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -35,13 +43,36 @@ const AboutContent = styled.div`
 
 const AboutImageContainer = styled.div`
   flex: 1;
+  max-width: 400px;
+  width: 100%;
   opacity: ${props => props.visible ? 1 : 0};
   transform: translateX(${props => props.visible ? '0' : '-50px'});
   transition: all 0.6s ease-out;
+  position: relative;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 133.33%; /* This creates the 3:4 aspect ratio */
+  }
+
+  @media (max-width: 768px) {
+    max-width: 300px;
+    margin: 0 auto;
+  }
 `;
 
-const AboutImage = styled(LazyImage)`
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+const StyledAboutImage = styled(LazyImage)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 `;
 
 const AboutText = styled.div`
@@ -49,6 +80,7 @@ const AboutText = styled.div`
   opacity: ${props => props.visible ? 1 : 0};
   transform: translateX(${props => props.visible ? '0' : '50px'});
   transition: all 0.6s ease-out;
+  padding: ${({ theme }) => theme.spacing[4]};
 `;
 
 const AboutParagraph = styled.p`
@@ -58,33 +90,42 @@ const AboutParagraph = styled.p`
 `;
 
 const SkillsContainer = styled.div`
-  margin-top: 2rem;
+  margin-top: ${({ theme }) => theme.spacing[8]};
+
+  h3 {
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `;
 
 const SkillTags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1rem;
+  gap: ${({ theme }) => theme.spacing[3]};
+  margin-top: ${({ theme }) => theme.spacing[4]};
 `;
 
 const SkillTag = styled.span`
-  background: #4338CA;
+  background: ${({ theme }) => theme.colors.primary};
   color: white;
-  padding: 0.5rem 1rem;
+  padding: ${({ theme }) => `${theme.spacing[2]} ${theme.spacing[4]}`};
   border-radius: 20px;
-  font-size: 0.9rem;
-  display: flex;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s ease;
+  gap: ${({ theme }) => theme.spacing[2]};
+  transition: all 0.2s ease;
+  cursor: help;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 
   &:hover {
     transform: translateY(-2px);
+    background: ${({ theme }) => theme.colors.primaryDark};
   }
 
-  i {
-    font-size: 0.8rem;
+  svg {
+    font-size: 0.8em;
   }
 `;
 
@@ -100,13 +141,38 @@ const About = () => {
   });
 
   const skills = [
-    'Python',
-    'SQL',
-    'Data Analysis',
-    'Data Visualization',
-    'Machine Learning',
-    'Power BI',
-    'FastAPI'
+    {
+      name: 'Python',
+      tooltip: 'Expert in Python for data science & ML - 3 years experience'
+    },
+    {
+      name: 'SQL',
+      tooltip: 'Advanced database querying with PostgreSQL & MySQL - 2 years experience'
+    },
+    {
+      name: 'Streamlit',
+      tooltip: 'Building interactive data science web apps - 10+ projects completed'
+    },
+    {
+      name: 'Data Manipulation',
+      tooltip: 'Expert: Pandas & NumPy for data preprocessing, cleaning & analysis'
+    },
+    {
+      name: 'Data Visualization',
+      tooltip: 'Advanced: Matplotlib, Seaborn, Power BI & Plotly for data storytelling'
+    },
+    {
+      name: 'Web Scraping',
+      tooltip: 'Proficient: Beautiful Soup & Selenium for automated data collection'
+    },
+    {
+      name: 'API Development',
+      tooltip: 'Experienced with Flask & FastAPI for building robust data services'
+    },
+    {
+      name: 'ML Modeling',
+      tooltip: 'Skilled in scikit-learn, Keras & TensorFlow for predictive modeling'
+    }
   ];
 
   return (
@@ -114,15 +180,12 @@ const About = () => {
       <Container>
         <SectionTitle>About Me</SectionTitle>
         <AboutContent>
-          <AboutImageContainer ref={imageRef} visible={imageInView}>            <AboutImage
+          <AboutImageContainer ref={imageRef} visible={imageInView}>
+            <StyledAboutImage
               src={images.profile}
               alt="Ayoub Taouabi"
               fallback={profileFallback}
-              width="100%"
-              maxWidth="350px"
-              height="420px"
               objectFit="cover"
-              borderRadius="10px"
             />
           </AboutImageContainer>
           <AboutText ref={textRef} visible={textInView}>
@@ -137,12 +200,19 @@ const About = () => {
               Comfortable with Jupyter, FastAPI, and PostgreSQL in analytical workflows.
             </AboutParagraph>
             <SkillsContainer>
+              <h3>Technical Skills</h3>
               <SkillTags>
                 {skills.map((skill, index) => (
-                  <SkillTag key={index}>
-                    <FontAwesomeIcon icon={faCode} />
-                    {skill}
-                  </SkillTag>
+                  <Tooltip
+                    key={index}
+                    content={skill.tooltip}
+                    defaultPosition={index % 2 === 0 ? 'top' : 'bottom'}
+                  >
+                    <SkillTag>
+                      <FontAwesomeIcon icon={faCode} />
+                      {skill.name}
+                    </SkillTag>
+                  </Tooltip>
                 ))}
               </SkillTags>
             </SkillsContainer>

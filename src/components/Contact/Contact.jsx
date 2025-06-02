@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { sendEmail } from '../../utils/emailjs';
 import Spinner from '../shared/Spinner';
@@ -56,13 +56,36 @@ const ContactLink = styled.a`
   padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[4]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   transition: ${({ theme }) => theme.transitions.default};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 
   &:hover {
     background: ${({ theme }) => theme.colors.secondary};
     transform: translateY(-2px);
   }
 
-  i {
+  &.download-cv {
+    background: ${({ theme }) => theme.colors.primary};
+    color: white;
+    padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[5]};
+    border: 2px solid transparent;
+
+    svg {
+      font-size: 1.1em;
+      margin-right: ${({ theme }) => theme.spacing[1]};
+    }
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primaryDark};
+      transform: translateY(-2px);
+      border-color: ${({ theme }) => theme.colors.primaryDark};
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  svg {
     font-size: ${({ theme }) => theme.typography.fontSize.xl};
   }
 `;
@@ -263,6 +286,15 @@ const Contact = () => {
           >
             <FontAwesomeIcon icon={faGithub} />
             <span>GitHub Profile</span>
+          </ContactLink>
+          <ContactLink 
+            href="/assets/Ayoub_Taouabi_CV.pdf"
+            download
+            className="download-cv"
+            aria-label="Download CV"
+          >
+            <FontAwesomeIcon icon={faFileDownload} />
+            <span>Download CV</span>
           </ContactLink>
         </ContactDetails>
 

@@ -9,10 +9,9 @@ const Nav = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  background: ${props => props.scrolled ? '#ffffff' : 'transparent'};
-  box-shadow: ${props => props.scrolled ? '0 2px 10px rgba(0,0,0,0.1)' : 'none'};
-  transition: all 0.3s ease-in-out;
+  z-index: 1000;  background: ${props => props.scrolled ? ({ theme }) => theme.colors.background.white : 'transparent'};
+  box-shadow: ${props => props.scrolled ? ({ theme }) => theme.shadows.md : 'none'};
+  transition: ${({ theme }) => theme.transitions.default};
 `;
 
 const NavContainer = styled.div`
@@ -24,32 +23,30 @@ const NavContainer = styled.div`
   align-items: center;
 `;
 
-const Logo = styled(Link)`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: ${props => props.scrolled ? '#333' : '#fff'};
+const Logo = styled(Link)`  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${props => props.scrolled ? ({ theme }) => theme.colors.text.primary : ({ theme }) => theme.colors.background.white};
   cursor: pointer;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: ${({ theme }) => theme.transitions.default};
 
   &:hover {
-    color: #4338CA;
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
-const NavMenu = styled.ul`
-  display: flex;
-  gap: 2rem;
+const NavMenu = styled.ul`  display: flex;
+  gap: ${({ theme }) => theme.spacing[8]};
   list-style: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: ${props => props.isOpen ? 'flex' : 'none'};
     flex-direction: column;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background: white;
+    background: ${({ theme }) => theme.colors.background.white};
     padding: 1rem;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
@@ -127,7 +124,7 @@ const Navbar = () => {
         <MenuButton onClick={toggleMenu} scrolled={scrolled}>
           <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
         </MenuButton>
-        <NavMenu isOpen={isOpen}>          {['home', 'about', 'projects', 'contact'].map((item) => (
+        <NavMenu isOpen={isOpen}>          {['home', 'about', 'skills', 'projects', 'contact'].map((item) => (
             <NavItem key={item}>
               <NavLink
                 to={item}

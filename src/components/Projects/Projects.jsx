@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import LazyImage from '../shared/LazyImage';
+import ProjectModal from './ProjectModal';
 import { images, fallbackImage } from '../../utils/images';
 
 const ProjectsSection = styled.section`
@@ -103,16 +104,19 @@ const ProjectTitle = styled.h3`
   font-weight: 600;
 `;
 
-const ProjectDescription = styled.p`
-  color: #4a5568;
-  margin-bottom: 1.5rem;
+const ProjectDescription = styled.div`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin-bottom: ${({ theme }) => theme.spacing[3]};
   line-height: 1.6;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  position: relative;
+  
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: ${({ theme }) => theme.spacing[2]};
+  }
 `;
 
 const ProjectTags = styled.div`
@@ -195,14 +199,91 @@ const LinkButton = styled.a`
   }
 `;
 
-const Projects = () => {  const projectsData = [
+const SeeMoreLink = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 0.9rem;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[1]};
+  padding: 0;
+  margin-top: ${({ theme }) => theme.spacing[2]};
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primaryDark};
+    transform: translateX(4px);
+  }
+
+  svg {
+    font-size: 0.8em;
+  }
+`;
+
+const FeaturesList = styled.ul`
+  list-style: none;
+  padding-left: ${({ theme }) => theme.spacing[6]};
+  margin: ${({ theme }) => theme.spacing[4]} 0;
+
+  li {
+    position: relative;
+    margin-bottom: ${({ theme }) => theme.spacing[2]};
+    line-height: 1.6;
+    color: ${({ theme }) => theme.colors.text.secondary};
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -${({ theme }) => theme.spacing[4]};
+      top: 0.7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: ${({ theme }) => theme.colors.primary};
+    }
+  }
+`;
+
+const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const projectsData = [
     {
       title: 'MyScore App',
       description: 'A web application for tracking and visualizing academic scores and progress. Built with a focus on user-friendly data input and insightful analytics.',
+      fullDescription: 'MyScore App is a comprehensive academic performance tracking system that helps students visualize and analyze their academic journey.',
       image: images.projects.myScore,
       tags: ['HTML', 'CSS', 'JavaScript', 'Chart.js'],
+      // features: [
+      //   'Interactive score input with real-time validation',
+      //   'Visual progress tracking with dynamic charts',
+      //   'Performance trend analysis by subject',
+      //   'Custom grading scale configuration',
+      //   'Export reports in multiple formats'
+      // ],
       github: '#',
-      demo: 'https://www.linkedin.com/feed/update/urn:li:activity:7209570700792115200/'
+      demo: 'https://www.linkedin.com/feed/update/urn:li:activity:7209570700792115200/',
+      techStack: {
+        frontend: {
+          mainTag: 'Frontend Development',
+          description: 'Modern, responsive interface with interactive visualizations',
+          subTags: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Chart.js']
+        },
+        features: {
+          mainTag: 'Core Features',
+          description: 'Comprehensive score tracking and analysis',
+          subTags: ['Score Analytics', 'Progress Tracking', 'Performance Metrics']
+        }
+      },
+      challenges: [
+        'Implementing complex data visualization while maintaining optimal performance',
+        'Creating an intuitive UX for data input and manipulation',
+        'Ensuring accurate statistical calculations for trend analysis'
+      ]
     },
     {
       title: 'Movie Recommendation App',
@@ -249,6 +330,16 @@ const Projects = () => {  const projectsData = [
     triggerOnce: true
   });
 
+  const handleOpenModal = (project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
     <ProjectsSection id="projects">
       <Container>
@@ -259,7 +350,8 @@ const Projects = () => {  const projectsData = [
               key={index}
               visible={inView}
               delay={index * 100}
-            >              <ProjectThumbnail
+            >
+              <ProjectThumbnail
                 src={project.image}
                 alt={`${project.title} Thumbnail`}
                 fallback={fallbackImage(`Project ${index + 1}`)}
@@ -268,12 +360,28 @@ const Projects = () => {  const projectsData = [
               />
               <ProjectInfo>
                 <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
+                <ProjectDescription>
+                  <p>{project.description}</p>
+                  <SeeMoreLink
+                    onClick={() => handleOpenModal(project)}
+                    aria-label={`Learn more about ${project.title}`}
+                  >
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    See More...
+                  </SeeMoreLink>
+                </ProjectDescription>
                 <ProjectTags>
                   {project.tags.map((tag, tagIndex) => (
                     <Tag key={tagIndex}>{tag}</Tag>
                   ))}
                 </ProjectTags>
+                {project.features && (
+                  <FeaturesList>
+                    {project.features.slice(0, 3).map((feature, featureIndex) => (
+                      <li key={featureIndex}>{feature}</li>
+                    ))}
+                  </FeaturesList>
+                )}
                 <ProjectLinks>
                   {project.github && (
                     <LinkButton
@@ -302,6 +410,12 @@ const Projects = () => {  const projectsData = [
           ))}
         </ProjectsGrid>
       </Container>
+
+      <ProjectModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        project={selectedProject}
+      />
     </ProjectsSection>
   );
 };
