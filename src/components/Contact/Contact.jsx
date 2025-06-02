@@ -22,6 +22,7 @@ const SectionTitle = styled.h2`
   font-size: ${({ theme }) => theme.typography.fontSize['4xl']};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   color: ${({ theme }) => theme.colors.text.primary};
+  color: #333;
 `;
 
 const ContactIntro = styled.p`

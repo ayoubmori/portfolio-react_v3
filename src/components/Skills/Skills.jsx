@@ -26,7 +26,7 @@ import {
 
 const SkillsSection = styled.section`
   min-height: 100vh;
-  padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
   background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
     url('/images/background.jpg') center/cover no-repeat fixed;
   color: white;
@@ -82,11 +82,11 @@ const CategoryTitle = styled.h3`
 const SkillsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[8]};
+  gap: ${({ theme }) => theme.spacing[1]};
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateY(${props => props.$visible ? '0' : '20px'});
   transition: all 0.6s ease-out;
-  margin-top: ${({ theme }) => theme.spacing[8]};
+  margin-top: ${({ theme }) => theme.spacing[1]};
 `;
 
 const SkillsRow = styled.div`
@@ -113,7 +113,7 @@ const CategoryGroup = styled.div`
 const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing[3]};
+  gap: ${({ theme }) => theme.spacing[4]};
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
