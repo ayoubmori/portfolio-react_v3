@@ -12,9 +12,9 @@ const HomeSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
+  padding: 6rem 2rem;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url('/images/background.jpg') center/cover no-repeat;
-  padding: 0 1rem;
 `;
 
 const HomeContainer = styled.div`
@@ -25,13 +25,6 @@ const HomeContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
-  padding: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 3rem;
-  }
 `;
 
 const HomeContent = styled.div`

@@ -8,13 +8,17 @@ import Tooltip from '../shared/Tooltip';
 import { images, profileFallback } from '../../utils/images';
 
 const AboutSection = styled.section`
-  padding: 6rem 1rem;
+  min-height: 100vh;
+  padding: 6rem 2rem;
   background: #f8f9fa;
+  display: flex;
+  align-items: center;
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 `;
 
 const SectionTitle = styled.h2`

@@ -26,10 +26,12 @@ import {
 
 const SkillsSection = styled.section`
   min-height: 100vh;
-  padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  padding: 6rem 2rem;
   background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
     url('/images/background.jpg') center/cover no-repeat fixed;
   color: white;
+  display: flex;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -82,11 +84,11 @@ const CategoryTitle = styled.h3`
 const SkillsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[1]};
+  gap: ${({ theme }) => theme.spacing[8]};
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateY(${props => props.$visible ? '0' : '20px'});
   transition: all 0.6s ease-out;
-  margin-top: ${({ theme }) => theme.spacing[1]};
+  width: 100%;
 `;
 
 const SkillsRow = styled.div`
@@ -101,33 +103,41 @@ const CategoryGroup = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[6]};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   height: 100%;
   min-width: 320px;
   max-width: 380px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing[4]};
+  gap: ${({ theme }) => theme.spacing[6]};
   width: 100%;
   max-width: 100%;
-  margin: 0 auto;
-
-  /* For Data Visualization - 3 cards in a row */
-  .visualization-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  margin: ${({ theme }) => theme.spacing[6]} auto 0;
 
   /* Special handling for grids with only 2 items */
   &:has(> *:nth-child(2):last-child) {
     grid-template-columns: repeat(2, 1fr);
+    width: 80%;
+    justify-content: center;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     gap: ${({ theme }) => theme.spacing[4]};
-    width: 66%;
+    &:has(> *:nth-child(2):last-child) {
+      width: 100%;
+    }
   }
 `;
 
