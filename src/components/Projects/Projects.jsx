@@ -257,7 +257,7 @@ const Projects = () => {
       description: 'A web application for tracking and visualizing academic scores and progress. Built with a focus on user-friendly data input and insightful analytics.',
       fullDescription: 'MyScore App is a comprehensive academic performance tracking system that helps students visualize and analyze their academic journey.',
       image: images.projects.myScore,
-      tags: ['HTML', 'CSS', 'JavaScript', 'Chart.js'],
+      tags: ['Python','Streamlit','HTML', 'CSS', 'Chart.js'],
       // features: [
       //   'Interactive score input with real-time validation',
       //   'Visual progress tracking with dynamic charts',
@@ -271,7 +271,7 @@ const Projects = () => {
         frontend: {
           mainTag: 'Frontend Development',
           description: 'Modern, responsive interface with interactive visualizations',
-          subTags: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Chart.js']
+          subTags: ['Python','Streamlit','HTML5', 'CSS3', 'JavaScript ES6+', 'Chart.js']
         },
         features: {
           mainTag: 'Core Features',
@@ -289,7 +289,7 @@ const Projects = () => {
       title: 'Movie Recommendation App',
       description: 'An innovative mobile-first platform for discovering movies. Leverages external APIs for real-time data and user ratings.',
       image: images.projects.movieApp,
-      tags: ['JavaScript', 'API Integration', 'Responsive Design'],
+      tags: ['Python',"Streamlit" ,'API Integration'],
       github: 'https://github.com/ayoubmori/Movies-App'
     },
     {
