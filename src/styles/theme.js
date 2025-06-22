@@ -51,6 +51,12 @@ export const theme = {
       sans: "'Poppins', sans-serif",
       heading: "'Montserrat', sans-serif",
     },
+    fontWeight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
   },
   borderRadius: {
     none: '0',

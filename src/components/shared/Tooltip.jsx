@@ -19,8 +19,8 @@ const TooltipWrapper = styled.div`
 
 const TooltipContent = styled.div`
   position: absolute;
-  ${({ position }) => {
-    switch (position) {
+  ${({ $position }) => {
+    switch ($position) {
       case 'top':
         return 'bottom: 100%; left: 50%; transform: translateX(-50%);';
       case 'bottom':
@@ -33,8 +33,8 @@ const TooltipContent = styled.div`
         return 'bottom: 100%; left: 50%; transform: translateX(-50%);';
     }
   }}
-  margin: ${({ position }) => 
-    position === 'top' || position === 'bottom' ? '10px 0' : '0 10px'};
+  margin: ${({ $position }) => 
+    $position === 'top' || $position === 'bottom' ? '10px 0' : '0 10px'};
   padding: 8px 12px;
   background: ${({ theme }) => theme.colors.text.primary};
   color: white;
@@ -52,8 +52,8 @@ const TooltipContent = styled.div`
     width: 0;
     height: 0;
     border: 6px solid transparent;
-    ${({ position }) => {
-      switch (position) {
+    ${({ $position }) => {
+      switch ($position) {
         case 'top':
           return `
             border-top-color: ${({ theme }) => theme.colors.text.primary};

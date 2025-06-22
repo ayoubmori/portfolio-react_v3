@@ -29,5 +29,17 @@ function App() {
     </ThemeProvider>
   );
 }
+// function App() {
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <GlobalStyle />
+      
+//       {/* We are replacing all your components with a simple test message */}
+//       <div style={{ color: 'white', padding: '50px', fontSize: '48px' }}>
+//         It Works!
+//       </div>
 
+//     </ThemeProvider>
+//   );
+// }
 export default App

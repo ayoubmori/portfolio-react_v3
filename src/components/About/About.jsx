@@ -2,10 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
-import LazyImage from '../shared/LazyImage';
+import { faCode, faStar } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '../shared/Tooltip';
-import { images, profileFallback } from '../../utils/images';
 
 const AboutSection = styled.section`
   min-height: 100vh;
@@ -28,13 +26,6 @@ const SectionTitle = styled.h2`
   color: #333;
 `;
 
-const AboutImageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-`;
-
 const AboutContent = styled.div`
   display: flex;
   gap: 4rem;
@@ -49,8 +40,8 @@ const AboutImageContainer = styled.div`
   flex: 1;
   max-width: 400px;
   width: 100%;
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateX(${props => props.visible ? '0' : '-50px'});
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateX(${props => props.$visible ? '0' : '-50px'});
   transition: all 0.6s ease-out;
   position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
@@ -60,7 +51,7 @@ const AboutImageContainer = styled.div`
   &::before {
     content: '';
     display: block;
-    padding-top: 133.33%; /* This creates the 3:4 aspect ratio */
+    padding-top: 133.33%;
   }
 
   @media (max-width: 768px) {
@@ -69,7 +60,7 @@ const AboutImageContainer = styled.div`
   }
 `;
 
-const StyledAboutImage = styled(LazyImage)`
+const StyledAboutImage = styled.img`
   position: absolute;
   top: 0;
   left: 0;
@@ -81,10 +72,10 @@ const StyledAboutImage = styled(LazyImage)`
 
 const AboutText = styled.div`
   flex: 1;
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateX(${props => props.visible ? '0' : '50px'});
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateX(${props => props.$visible ? '0' : '50px'});
   transition: all 0.6s ease-out;
-  padding: ${({ theme }) => theme.spacing[4]};
+  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[4]};
 `;
 
 const AboutParagraph = styled.p`
@@ -97,7 +88,7 @@ const SkillsContainer = styled.div`
   margin-top: ${({ theme }) => theme.spacing[8]};
 
   h3 {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.text.secondary};
     font-size: ${({ theme }) => theme.typography.fontSize.xl};
     margin-bottom: ${({ theme }) => theme.spacing[4]};
   }
@@ -120,9 +111,13 @@ const SkillTag = styled.span`
   align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
   transition: all 0.2s ease;
-  cursor: help;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  cursor: default; /* Default cursor for most tags */
 
+  &[data-tooltip-id] {
+    cursor: help; /* Help cursor for tags with tooltips */
+  }
+  
   &:hover {
     transform: translateY(-2px);
     background: ${({ theme }) => theme.colors.primaryDark};
@@ -134,84 +129,62 @@ const SkillTag = styled.span`
 `;
 
 const About = () => {
-  const [imageRef, imageInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
+  const [imageRef, imageInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [textRef, textInView] = useInView({ threshold: 0.1, triggerOnce: true });
 
-  const [textRef, textInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  const skills = [
-    {
-      name: 'Python',
-      tooltip: 'Expert in Python for data science & ML - 3 years experience'
-    },
-    {
-      name: 'SQL',
-      tooltip: 'Advanced database querying with PostgreSQL & MySQL - 2 years experience'
-    },
-    {
-      name: 'Streamlit',
-      tooltip: 'Building interactive data science web apps - 10+ projects completed'
-    },
-    {
-      name: 'Data Manipulation',
-      tooltip: 'Expert: Pandas & NumPy for data preprocessing, cleaning & analysis'
-    },
-    {
-      name: 'Data Visualization',
-      tooltip: 'Advanced: Matplotlib, Seaborn, Power BI & Plotly for data storytelling'
-    },
-    {
-      name: 'Web Scraping',
-      tooltip: 'Proficient: Beautiful Soup & Selenium for automated data collection'
-    },
-    {
-      name: 'API Development',
-      tooltip: 'Experienced with Flask & FastAPI for building robust data services'
-    },
-    {
-      name: 'ML Modeling',
-      tooltip: 'Skilled in scikit-learn, Keras & TensorFlow for predictive modeling'
-    }
+  const technicalSkills = [
+    { name: 'Python', tooltip: 'Expert in Python for data science & ML' },
+    { name: 'SQL', tooltip: 'Advanced database querying with PostgreSQL & MySQL' },
+    { name: 'Streamlit', tooltip: 'Building interactive data science web apps' },
+    { name: 'Data Manipulation', tooltip: 'Expert: Pandas & NumPy for data preprocessing' },
+    { name: 'Data Visualization', tooltip: 'Advanced: Matplotlib, Seaborn, Power BI & Plotly' },
+    { name: 'Web Scraping', tooltip: 'Proficient: Beautiful Soup & Selenium' },
+    { name: 'API Development', tooltip: 'Experienced with Flask & FastAPI' },
+    { name: 'ML Modeling', tooltip: 'Skilled in scikit-learn, Keras & TensorFlow' }
   ];
 
+  // UPDATED: Your specific list of general skills
+  const professionalSkills = [
+    { name: 'Critical Thinking' },
+    { name: 'Problem-Solving & Troubleshooting' },
+    { name: 'Teamwork & Collaboration' },
+    { name: 'Time Management' },
+    { name: 'Adaptability & Flexibility' },
+    { name: 'Strong Communication Skills' },
+    { name: 'Fast Learning Ability' },
+    { name: 'Project & Task Prioritization' },
+    { name: 'Multilingual Communication', tooltip: 'Fluent in Arabic, English & French' }
+  ];
+  
   return (
     <AboutSection id="about">
       <Container>
         <SectionTitle>About Me</SectionTitle>
         <AboutContent>
-          <AboutImageContainer ref={imageRef} visible={imageInView}>
+          <AboutImageContainer ref={imageRef} $visible={imageInView}>
             <StyledAboutImage
-              src={images.profile}
+              src="/images/profil_pic_extend.jpg"
               alt="Ayoub Taouabi"
-              fallback={profileFallback}
-              objectFit="cover"
+              loading="lazy"
             />
           </AboutImageContainer>
-          <AboutText ref={textRef} visible={textInView}>
+          <AboutText ref={textRef} $visible={textInView}>
             <AboutParagraph>
-              I'm Ayoub Taouabi, a data analyst pursuing an MSc in Data Analytics & AI.
-              I turn complex data into meaningful insights that solve real-world problems.
-              Driven by curiosity, I blend analysis with storytelling to support smart decisions.
+              I'm Ayoub Taouabi, a data analyst pursuing an MSc in Data Analytics & AI. I turn
+              complex data into meaningful insights that solve real-world problems. Driven by
+              curiosity, I blend analysis with storytelling to support smart decisions.
             </AboutParagraph>
             <AboutParagraph>
               Skilled in Python, SQL, Power BI, and Tableau for data analysis and visualization.
               Experienced in data cleaning, preprocessing, and statistical modeling.
               Comfortable with Jupyter, FastAPI, and PostgreSQL in analytical workflows.
             </AboutParagraph>
-            <SkillsContainer>
+            
+            {/* <SkillsContainer>
               <h3>Technical Skills</h3>
               <SkillTags>
-                {skills.map((skill, index) => (
-                  <Tooltip
-                    key={index}
-                    content={skill.tooltip}
-                    defaultPosition={index % 2 === 0 ? 'top' : 'bottom'}
-                  >
+                {technicalSkills.map((skill, index) => (
+                  <Tooltip key={index} content={skill.tooltip}>
                     <SkillTag>
                       <FontAwesomeIcon icon={faCode} />
                       {skill.name}
@@ -219,7 +192,30 @@ const About = () => {
                   </Tooltip>
                 ))}
               </SkillTags>
+            </SkillsContainer> */}
+
+            <SkillsContainer>
+              <h3>Professional Skills</h3>
+              <SkillTags>
+                {/* UPDATED: This logic now checks if a skill has a tooltip */}
+                {professionalSkills.map((skill, index) =>
+                  skill.tooltip ? (
+                    <Tooltip key={index} content={skill.tooltip}>
+                      <SkillTag>
+                        <FontAwesomeIcon icon={faStar} />
+                        {skill.name}
+                      </SkillTag>
+                    </Tooltip>
+                  ) : (
+                    <SkillTag key={index}>
+                      <FontAwesomeIcon icon={faStar} />
+                      {skill.name}
+                    </SkillTag>
+                  )
+                )}
+              </SkillTags>
             </SkillsContainer>
+
           </AboutText>
         </AboutContent>
       </Container>

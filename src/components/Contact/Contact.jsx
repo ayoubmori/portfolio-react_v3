@@ -38,8 +38,8 @@ const ContactDetails = styled.div`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing[8]};
   margin-bottom: ${({ theme }) => theme.spacing[12]};
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateY(${props => props.visible ? '0' : '20px'});
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
   transition: ${({ theme }) => theme.transitions.slow};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -94,8 +94,8 @@ const ContactLink = styled.a`
 const ContactForm = styled.form`
   max-width: 600px;
   margin: 0 auto;
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateY(${props => props.visible ? '0' : '20px'});
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
   transition: ${({ theme }) => theme.transitions.slow};
   transition-delay: 0.2s;
 `;
@@ -265,7 +265,7 @@ const Contact = () => {
           I'm always open to discussing new projects, creative ideas, or opportunities to be part of something amazing. Feel free to reach out!
         </ContactIntro>
         
-        <ContactDetails ref={detailsRef} visible={detailsInView}>
+        <ContactDetails ref={detailsRef} $visible={detailsInView}>
           <ContactLink href="mailto:ayoubtaouabi66@gmail.com" aria-label="Email">
             <FontAwesomeIcon icon={faEnvelope} />
             <span>ayoubtaouabi66@gmail.com</span>
@@ -299,7 +299,7 @@ const Contact = () => {
           </ContactLink>
         </ContactDetails>
 
-        <ContactForm onSubmit={handleSubmit} ref={formRef} visible={formInView}>
+        <ContactForm onSubmit={handleSubmit} ref={formRef} $visible={formInView}>
           <FormGroup>
             <Label htmlFor="name">Full Name</Label>
             <Input
