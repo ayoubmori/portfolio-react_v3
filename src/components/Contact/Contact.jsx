@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faFileDownload } from '@fortawesome/free-solid-svg-icons';
+// 1. Import the 'faEye' icon and remove 'faFileDownload'
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { sendEmail } from '../../utils/emailjs';
 import Spinner from '../shared/Spinner';
@@ -21,7 +22,6 @@ const SectionTitle = styled.h2`
   text-align: center;
   font-size: ${({ theme }) => theme.typography.fontSize['4xl']};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
-  color: ${({ theme }) => theme.colors.text.primary};
   color: #333;
 `;
 
@@ -36,13 +36,15 @@ const ContactIntro = styled.p`
 const ContactDetails = styled.div`
   display: flex;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing[8]};
+  flex-wrap: wrap; /* Added for better responsiveness */
+  gap: ${({ theme }) => theme.spacing[6]}; /* Adjusted gap */
   margin-bottom: ${({ theme }) => theme.spacing[12]};
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateY(${props => props.$visible ? '0' : '20px'});
-  transition: ${({ theme }) => theme.transitions.slow};
+  transition: all 0.6s ease-out;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[4]};
     flex-direction: column;
     align-items: center;
   }
@@ -67,7 +69,7 @@ const ContactLink = styled.a`
   &.download-cv {
     background: ${({ theme }) => theme.colors.primary};
     color: white;
-    padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[5]};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[5]};
     border: 2px solid transparent;
 
     svg {
@@ -91,30 +93,28 @@ const ContactLink = styled.a`
   }
 `;
 
+// ... The rest of your styled-components (ContactForm, FormGroup, etc.) remain the same ...
 const ContactForm = styled.form`
   max-width: 600px;
   margin: 0 auto;
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateY(${props => props.$visible ? '0' : '20px'});
-  transition: ${({ theme }) => theme.transitions.slow};
+  transition: all 0.6s ease-out;
   transition-delay: 0.2s;
 `;
-
 const FormGroup = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
 `;
-
 const Label = styled.label`
   display: block;
   margin-bottom: ${({ theme }) => theme.spacing[2]};
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: #333;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
-
 const inputStyles = ({ theme }) => `
   width: 100%;
   padding: ${theme.spacing[3]};
-  border: 2px solid ${theme.colors.background.light};
+  border: 1px solid #ccc;
   border-radius: ${theme.borderRadius.md};
   font-size: ${theme.typography.fontSize.base};
   font-family: ${theme.typography.fontFamily.sans};
@@ -123,26 +123,21 @@ const inputStyles = ({ theme }) => `
   &:focus {
     outline: none;
     border-color: ${theme.colors.primary};
+    box-shadow: 0 0 0 2px ${theme.colors.secondary};
   }
 `;
-
-const Input = styled.input`
-  ${inputStyles}
-`;
-
+const Input = styled.input`${inputStyles}`;
 const Textarea = styled.textarea`
   ${inputStyles}
   resize: vertical;
   min-height: 150px;
 `;
-
 const ErrorMessage = styled.small`
   color: ${({ theme }) => theme.colors.error.dark};
   margin-top: ${({ theme }) => theme.spacing[1]};
   display: block;
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `;
-
 const SubmitButton = styled.button`
   width: 100%;
   padding: ${({ theme }) => theme.spacing[4]};
@@ -158,93 +153,63 @@ const SubmitButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};
-
   &:hover:not(:disabled) {
     background: ${({ theme }) => theme.colors.primaryDark};
   }
-
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
 `;
-
 const StatusMessage = styled.div`
   text-align: center;
   margin-top: ${({ theme }) => theme.spacing[4]};
   padding: ${({ theme }) => theme.spacing[4]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-
   &.success {
     background: ${({ theme }) => theme.colors.success.light};
     color: ${({ theme }) => theme.colors.success.dark};
   }
-
   &.error {
     background: ${({ theme }) => theme.colors.error.light};
     color: ${({ theme }) => theme.colors.error.dark};
   }
 `;
 
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    from_name: '',
-    reply_to: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ from_name: '', reply_to: '', message: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
 
-  const [detailsRef, detailsInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  const [formRef, formInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
+  const [detailsRef, detailsInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [formRef, formInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  
+  // ... your form logic (validateForm, handleChange, handleSubmit) remains the same ...
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.from_name.trim()) {
-      newErrors.from_name = 'Name is required';
-    }
+    if (!formData.from_name.trim()) newErrors.from_name = 'Name is required';
     if (!formData.reply_to.trim()) {
       newErrors.reply_to = 'Email is required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.reply_to)) {
       newErrors.reply_to = 'Invalid email address';
     }
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
     return newErrors;
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
+    setFormData(prev => ({...prev, [name]: value}));
+    if (errors[name]) setErrors(prev => ({...prev, [name]: ''}));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
-    
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      try {        // Use the configured emailjs utility
+      try {
         await sendEmail(formData);
         setStatus({ type: 'success', message: 'Message sent successfully!' });
         setFormData({ from_name: '', reply_to: '', message: '' });
@@ -256,6 +221,7 @@ const Contact = () => {
       setErrors(newErrors);
     }
   };
+
 
   return (
     <ContactSection id="contact">
@@ -288,71 +254,41 @@ const Contact = () => {
             <FontAwesomeIcon icon={faGithub} />
             <span>GitHub Profile</span>
           </ContactLink>
+          
+          {/* 2. This is the updated link for your CV */}
           <ContactLink 
-            href="/assets/Ayoub_Taouabi_CV.pdf"
-            download
+            href="https://drive.google.com/file/d/1_m9rmruf214KQXi11-DkqkiivA2Chnpy/view"
+            target="_blank"
+            rel="noopener noreferrer"
             className="download-cv"
-            aria-label="Download CV"
+            aria-label="View CV"
           >
-            <FontAwesomeIcon icon={faFileDownload} />
-            <span>Download CV</span>
+            <FontAwesomeIcon icon={faEye} />
+            <span>View Resume</span>
           </ContactLink>
         </ContactDetails>
 
         <ContactForm onSubmit={handleSubmit} ref={formRef} $visible={formInView}>
+          {/* ... Your form JSX remains the same ... */}
           <FormGroup>
             <Label htmlFor="name">Full Name</Label>
-            <Input
-              type="text"
-              id="name"
-              name="from_name"
-              value={formData.from_name}
-              onChange={handleChange}
-              placeholder="Your Full Name"
-            />
+            <Input type="text" id="name" name="from_name" value={formData.from_name} onChange={handleChange} placeholder="Your Full Name" />
             {errors.from_name && <ErrorMessage>{errors.from_name}</ErrorMessage>}
           </FormGroup>
-          
           <FormGroup>
             <Label htmlFor="email">Email Address</Label>
-            <Input
-              type="email"
-              id="email"
-              name="reply_to"
-              value={formData.reply_to}
-              onChange={handleChange}
-              placeholder="your.email@example.com"
-            />
+            <Input type="email" id="email" name="reply_to" value={formData.reply_to} onChange={handleChange} placeholder="your.email@example.com" />
             {errors.reply_to && <ErrorMessage>{errors.reply_to}</ErrorMessage>}
           </FormGroup>
-          
           <FormGroup>
             <Label htmlFor="message">Message</Label>
-            <Textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="5"
-              placeholder="Your message here..."
-            />
+            <Textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="5" placeholder="Your message here..." />
             {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
-          </FormGroup>          <SubmitButton type="submit" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <Spinner />
-                Sending...
-              </>
-            ) : (
-              'Send Message'
-            )}
+          </FormGroup>
+          <SubmitButton type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (<><Spinner /> Sending...</>) : ('Send Message')}
           </SubmitButton>
-
-          {status && (
-            <StatusMessage className={status.type}>
-              {status.message}
-            </StatusMessage>
-          )}
+          {status && (<StatusMessage className={status.type}>{status.message}</StatusMessage>)}
         </ContactForm>
       </Container>
     </ContactSection>
