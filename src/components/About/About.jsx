@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faStar } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from '../shared/Tooltip';
+import Tooltip from '../shared/Tooltip'; // Assuming you have a Tooltip component
 
 const AboutSection = styled.section`
   min-height: 100vh;
@@ -75,7 +75,7 @@ const AboutText = styled.div`
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateX(${props => props.$visible ? '0' : '50px'});
   transition: all 0.6s ease-out;
-  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[4]};
+  padding-top: ${({ theme }) => theme.spacing[8]};
 `;
 
 const AboutParagraph = styled.p`
@@ -112,10 +112,10 @@ const SkillTag = styled.span`
   gap: ${({ theme }) => theme.spacing[2]};
   transition: all 0.2s ease;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  cursor: default; /* Default cursor for most tags */
+  cursor: default;
 
   &[data-tooltip-id] {
-    cursor: help; /* Help cursor for tags with tooltips */
+    cursor: help;
   }
   
   &:hover {
@@ -142,8 +142,7 @@ const About = () => {
     { name: 'API Development', tooltip: 'Experienced with Flask & FastAPI' },
     { name: 'ML Modeling', tooltip: 'Skilled in scikit-learn, Keras & TensorFlow' }
   ];
-
-  // UPDATED: Your specific list of general skills
+  
   const professionalSkills = [
     { name: 'Critical Thinking' },
     { name: 'Problem-Solving & Troubleshooting' },
@@ -179,25 +178,9 @@ const About = () => {
               Experienced in data cleaning, preprocessing, and statistical modeling.
               Comfortable with Jupyter, FastAPI, and PostgreSQL in analytical workflows.
             </AboutParagraph>
-            
-            {/* <SkillsContainer>
-              <h3>Technical Skills</h3>
-              <SkillTags>
-                {technicalSkills.map((skill, index) => (
-                  <Tooltip key={index} content={skill.tooltip}>
-                    <SkillTag>
-                      <FontAwesomeIcon icon={faCode} />
-                      {skill.name}
-                    </SkillTag>
-                  </Tooltip>
-                ))}
-              </SkillTags>
-            </SkillsContainer> */}
-
             <SkillsContainer>
               <h3>Professional Skills</h3>
               <SkillTags>
-                {/* UPDATED: This logic now checks if a skill has a tooltip */}
                 {professionalSkills.map((skill, index) =>
                   skill.tooltip ? (
                     <Tooltip key={index} content={skill.tooltip}>
@@ -215,7 +198,6 @@ const About = () => {
                 )}
               </SkillTags>
             </SkillsContainer>
-
           </AboutText>
         </AboutContent>
       </Container>
