@@ -257,7 +257,7 @@ const Contact = () => {
           
           {/* 2. This is the updated link for your CV */}
           <ContactLink 
-            href="https://drive.google.com/file/d/1_m9rmruf214KQXi11-DkqkiivA2Chnpy/view"
+            href="https://drive.google.com/file/d/1ixzYShWU6FmOkJOmeqhblZuyUoPFe5hc/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="download-cv"
