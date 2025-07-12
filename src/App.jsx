@@ -1,4 +1,10 @@
+
+
+
 import React from 'react';
+
+import { inject } from "@vercel/analytics"
+import { Analytics } from "@vercel/analytics/react"
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import { GlobalStyle } from './styles/GlobalStyle';
@@ -10,6 +16,8 @@ import Skills from './components/Skills/Skills';
 import Projects from './components/Projects/Projects';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+
+
 
 function App() {
   return (
