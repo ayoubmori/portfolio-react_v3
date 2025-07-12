@@ -147,12 +147,10 @@ const About = () => {
     { name: 'Critical Thinking' },
     { name: 'Problem-Solving & Troubleshooting' },
     { name: 'Teamwork & Collaboration' },
-    { name: 'Time Management' },
     { name: 'Adaptability & Flexibility' },
-    { name: 'Strong Communication Skills' },
     { name: 'Fast Learning Ability' },
     { name: 'Project & Task Prioritization' },
-    { name: 'Multilingual Communication', tooltip: 'Fluent in Arabic, English & French' }
+    { name: 'Multilingual Communication'}
   ];
   
   return (

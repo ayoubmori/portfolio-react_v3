@@ -362,13 +362,13 @@ const Projects = () => {
                 <ProjectTitle>{project.title}</ProjectTitle>
                 <ProjectDescription>
                   <p>{project.description}</p>
-                  <SeeMoreLink
+                  {/* <SeeMoreLink
                     onClick={() => handleOpenModal(project)}
                     aria-label={`Learn more about ${project.title}`}
                   >
                     <FontAwesomeIcon icon={faInfoCircle} />
                     See More...
-                  </SeeMoreLink>
+                  </SeeMoreLink> */}
                 </ProjectDescription>
                 <ProjectTags>
                   {project.tags.map((tag, tagIndex) => (
