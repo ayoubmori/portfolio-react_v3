@@ -1,20 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-scroll';
-import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-scroll'; // [cite: 76]
+import { useInView } from 'react-intersection-observer'; // [cite: 91]
 import ProfilePicture from '../shared/ProfilePicture';
 import SocialLinks from '../shared/SocialLinks';
-import { images, profileFallback } from '../../utils/images';
-import heroImage from '/images/ayoub-img.jpg';
-import backgroundImage from '/images/background.jpg';
+import { images, profileFallback } from '../../utils/images'; // [cite: 77]
 
 const HomeSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('/images/background.jpg') center/cover no-repeat;
+  padding: 6rem 2rem; /* [cite: 78] */
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url('/images/background.jpg') center/cover no-repeat; /* [cite: 79] */
 `;
 
 const HomeContainer = styled.div`
@@ -24,172 +22,112 @@ const HomeContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem;
+  gap: 4rem; /* [cite: 80] */
+
+  @media (max-width: 968px) {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 2rem;
+  }
 `;
 
 const HomeContent = styled.div`
   flex: 1;
   max-width: 600px;
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateY(${props => props.visible ? '0' : '20px'});
-  transition: all 0.6s ease-out;
-`;
-
-const HomeImageContainer = styled.div`
-  flex: 0.8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: ${props => props.visible ? 1 : 0};
-  transform: translateY(${props => props.visible ? '0' : '20px'});
-  transition: all 0.6s ease-out;
-  transition-delay: 0.2s;
-  
-  @media (max-width: 768px) {
-    width: 280px;
-    margin: 0 auto;
-  }
-`;
-
-const StyledProfilePicture = styled(ProfilePicture)`
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  @media (max-width: 768px) {
-    width: 260px;
-    height: 260px;
-  }
+  opacity: ${props => props.$visible ? 1 : 0}; /* [cite: 81] */
+  transform: translateY(${props => props.$visible ? '0' : '30px'}); /* [cite: 82] */
+  transition: all 0.8s ease-out;
 `;
 
 const Title = styled.h1`
-  font-size: 3rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem); 
   color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /*  */
 
-  .highlight {
-    color: #4338CA;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
+  span {
+    color: ${({ theme }) => theme.colors.primary}; /* [cite: 84] */
   }
 `;
 
-const Subtitle = styled.p`
+// FIXED: Changed from 'p' to 'h2' for SEO keyword ranking
+const Subtitle = styled.h2`
   font-size: 1.5rem;
-  color: #E0E7FF;
-  margin-bottom: 1rem;
-`;
-
-const Description = styled.p`
-  color: #fff;
+  color: #E0E7FF; /*  */
   margin-bottom: 1.5rem;
-  line-height: 1.6;
-`;
-
-const SocialLinksWrapper = styled.div`
-  margin-bottom: 2rem;
+  font-weight: 300;
+  letter-spacing: 1px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 2rem; /* [cite: 86] */
 
-  @media (max-width: 768px) {
+  @media (max-width: 968px) {
     justify-content: center;
   }
 `;
 
-const Button = styled(Link)`
+const StyledButton = styled(Link)`
   padding: 0.8rem 2rem;
-  border-radius: 5px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-weight: 600; /* [cite: 87] */
   cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
-
+  
   &.primary {
-    background: #4338CA;
-    color: white;
-    border: 2px solid #4338CA;
-
-    &:hover {
-      background: #3730A3;
-      border-color: #3730A3;
-    }
+    background: ${({ theme }) => theme.colors.primary};
+    color: white; /* [cite: 88] */
+    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } /* [cite: 89] */
   }
 
   &.secondary {
-    background: transparent;
-    color: white;
     border: 2px solid white;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
+    color: white;
+    &:hover { background: rgba(255, 255, 255, 0.1); } /* [cite: 90] */
   }
 `;
 
-const StyledSocialLinks = styled(SocialLinks)`
-  margin-bottom: 2rem;
-`;
-
 const Home = () => {
-  const [contentRef, contentInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  const [imageRef, imageInView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true }); // [cite: 91]
 
   return (
     <HomeSection id="home">
       <HomeContainer>
-        <HomeContent ref={contentRef} visible={contentInView}>
-          <Title>Hi, I'm <span className="highlight">Ayoub Taouabi</span></Title>
-          <Subtitle>A Passionate Junior Data Scientist</Subtitle>
-          <Description>
-            Transforming raw data into strategic insights that drive impact. 
-            Passionate about analytics, precision, and storytelling through data.
-          </Description>
-          <SocialLinksWrapper>
+        <HomeContent ref={ref} $visible={inView}>
+          <Title>Hi, I'm <span>Ayoub Taouabi</span></Title>
+          {/* SEO Improvement: Meaningful H2 Title */}
+          <Subtitle>Data Scientist & AI Specialist</Subtitle>
+          <p style={{ color: '#fff', marginBottom: '2rem', lineHeight: '1.6' }}>
+            Transforming complex data into strategic insights. I specialize in 
+            building analytical workflows and machine learning models that drive 
+            real-world impact through precision and storytelling.
+          </p>
+          <div style={{ marginBottom: '2rem' }}>
             <SocialLinks />
-          </SocialLinksWrapper>
+          </div>
           <ButtonContainer>
-            <Button
-              to="projects"
-              smooth={true}
-              duration={500}
-              className="primary"
-            >
+            <StyledButton to="projects" smooth={true} className="primary" aria-label="Navigate to projects section">
               View My Projects
-            </Button>
-            <Button
-              to="contact"
-              smooth={true}
-              duration={500}
-              className="secondary"
-            >
+            </StyledButton>
+            <StyledButton to="contact" smooth={true} className="secondary" aria-label="Navigate to contact section">
               Get In Touch
-            </Button>
+            </StyledButton>
           </ButtonContainer>
-        </HomeContent>        <HomeImageContainer ref={imageRef} visible={imageInView}>
-          <StyledProfilePicture
+        </HomeContent>
+
+        <div style={{ flex: '0.8', display: 'flex', justifyContent: 'center' }}>
+          <ProfilePicture
             src={images.profile}
-            alt="Ayoub Taouabi - Profile Picture"
+            /* SEO Improvement: Specific Alt Text */
+            alt="Ayoub Taouabi - Data Scientist and AI Specialist Professional Portfolio Image"
             fallback={profileFallback}
-            size="330px"
+            size="clamp(250px, 30vw, 350px)" 
           />
-        </HomeImageContainer>
+        </div>
       </HomeContainer>
     </HomeSection>
-  );
+  ); // [cite: 92-96]
 };
 
 export default Home;

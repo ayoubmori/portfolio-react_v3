@@ -1,62 +1,65 @@
 import React from 'react';
+import { images } from '../../utils/images';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faStar } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from '../shared/Tooltip'; // Assuming you have a Tooltip component
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const AboutSection = styled.section`
   min-height: 100vh;
   padding: 6rem 2rem;
-  background: #f8f9fa;
+  /* FIXED: Pure white background as requested */
+  background: ${({ theme }) => theme.colors.background.white}; 
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-`;
-
-const SectionTitle = styled.h2`
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the H2 title relative to the container */
 `;
 
 const AboutContent = styled.div`
   display: flex;
-  gap: 4rem;
-  align-items: flex-start;
+  /* FIXED: align-items center ensures text and image are perfectly leveled horizontally */
+  align-items: center; 
+  justify-content: center;
+  gap: clamp(2rem, 8vw, 5rem);
+  width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 968px) {
     flex-direction: column;
+    text-align: center;
   }
 `;
 
 const AboutImageContainer = styled.div`
-  flex: 1;
-  max-width: 400px;
-  width: 100%;
+  flex: 0 0 400px; 
+  max-width: 100%;
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateX(${props => props.$visible ? '0' : '-50px'});
-  transition: all 0.6s ease-out;
+  transition: all 0.8s ease-out;
   position: relative;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
+  /* Added a subtle shadow so the white card pops against the white bg */
+  box-shadow: ${({ theme }) => theme.shadows.lg}; 
 
   &::before {
     content: '';
     display: block;
-    padding-top: 133.33%;
+    padding-top: 120%; 
   }
 
-  @media (max-width: 768px) {
-    max-width: 300px;
-    margin: 0 auto;
+  @media (max-width: 968px) {
+    flex: 0 0 auto;
+    width: 280px;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -67,135 +70,97 @@ const StyledAboutImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: inherit;
 `;
 
 const AboutText = styled.div`
   flex: 1;
   opacity: ${props => props.$visible ? 1 : 0};
   transform: translateX(${props => props.$visible ? '0' : '50px'});
-  transition: all 0.6s ease-out;
-  padding-top: ${({ theme }) => theme.spacing[8]};
-`;
-
-const AboutParagraph = styled.p`
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
-  color: #4a5568;
-`;
-
-const SkillsContainer = styled.div`
-  margin-top: ${({ theme }) => theme.spacing[8]};
-
-  h3 {
-    color: ${({ theme }) => theme.colors.text.secondary};
-    font-size: ${({ theme }) => theme.typography.fontSize.xl};
-    margin-bottom: ${({ theme }) => theme.spacing[4]};
-  }
-`;
-
-const SkillTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing[3]};
-  margin-top: ${({ theme }) => theme.spacing[4]};
+  transition: all 0.8s ease-out;
+  /* FIXED: Dark text for high visibility on white background */
+  color: ${({ theme }) => theme.colors.text.dark}; 
 `;
 
 const SkillTag = styled.span`
   background: ${({ theme }) => theme.colors.primary};
   color: white;
-  padding: ${({ theme }) => `${theme.spacing[2]} ${theme.spacing[4]}`};
-  border-radius: 20px;
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing[2]};
-  transition: all 0.2s ease;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  cursor: default;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: transform 0.2s ease;
 
-  &[data-tooltip-id] {
-    cursor: help;
-  }
-  
   &:hover {
-    transform: translateY(-2px);
-    background: ${({ theme }) => theme.colors.primaryDark};
-  }
-
-  svg {
-    font-size: 0.8em;
+    transform: scale(1.05);
   }
 `;
 
 const About = () => {
-  const [imageRef, imageInView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const [textRef, textInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const { ref: contentRef, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
-  const technicalSkills = [
-    { name: 'Python', tooltip: 'Expert in Python for data science & ML' },
-    { name: 'SQL', tooltip: 'Advanced database querying with PostgreSQL & MySQL' },
-    { name: 'Streamlit', tooltip: 'Building interactive data science web apps' },
-    { name: 'Data Manipulation', tooltip: 'Expert: Pandas & NumPy for data preprocessing' },
-    { name: 'Data Visualization', tooltip: 'Advanced: Matplotlib, Seaborn, Power BI & Plotly' },
-    { name: 'Web Scraping', tooltip: 'Proficient: Beautiful Soup & Selenium' },
-    { name: 'API Development', tooltip: 'Experienced with Flask & FastAPI' },
-    { name: 'ML Modeling', tooltip: 'Skilled in scikit-learn, Keras & TensorFlow' }
+  const skills = [
+    "Machine Learning", "Data Storytelling", "Critical Thinking", 
+    "Problem Solving", "Data Mining", "SQL & Python"
   ];
-  
-  const professionalSkills = [
-    { name: 'Critical Thinking' },
-    { name: 'Problem-Solving & Troubleshooting' },
-    { name: 'Teamwork & Collaboration' },
-    { name: 'Adaptability & Flexibility' },
-    { name: 'Fast Learning Ability' },
-    { name: 'Project & Task Prioritization' },
-    { name: 'Multilingual Communication'}
-  ];
-  
+
   return (
     <AboutSection id="about">
       <Container>
-        <SectionTitle>About Me</SectionTitle>
-        <AboutContent>
-          <AboutImageContainer ref={imageRef} $visible={imageInView}>
+        {/* FIXED: Title color set to dark grey/black for visibility */}
+        <h2 style={{ 
+          textAlign: 'center', 
+          fontSize: 'clamp(2.3rem, 5vw, 3rem)', 
+          marginBottom: '4rem',
+          color: '#333333',
+          fontWeight: '700'
+        }}>
+          About <span style={{ color: '#4338CA' }}>Me</span>
+        </h2>
+        
+        <AboutContent ref={contentRef}>
+          <AboutImageContainer $visible={inView}>
             <StyledAboutImage
-              src="/images/profil_pic_extend.jpg"
-              alt="Ayoub Taouabi"
-              loading="lazy"
+              src={images.about}
+              alt="Ayoub Taouabi - Data Scientist Portfolio"
             />
           </AboutImageContainer>
-          <AboutText ref={textRef} $visible={textInView}>
-            <AboutParagraph>
-              I'm Ayoub Taouabi, a data analyst pursuing an MSc in Data Analytics & AI. I turn
-              complex data into meaningful insights that solve real-world problems. Driven by
-              curiosity, I blend analysis with storytelling to support smart decisions.
-            </AboutParagraph>
-            <AboutParagraph>
-              Skilled in Python, SQL, Power BI, and Tableau for data analysis and visualization.
-              Experienced in data cleaning, preprocessing, and statistical modeling.
-              Comfortable with Jupyter, FastAPI, and PostgreSQL in analytical workflows.
-            </AboutParagraph>
-            <SkillsContainer>
-              <h3>Professional Skills</h3>
-              <SkillTags>
-                {professionalSkills.map((skill, index) =>
-                  skill.tooltip ? (
-                    <Tooltip key={index} content={skill.tooltip}>
-                      <SkillTag>
-                        <FontAwesomeIcon icon={faStar} />
-                        {skill.name}
-                      </SkillTag>
-                    </Tooltip>
-                  ) : (
-                    <SkillTag key={index}>
-                      <FontAwesomeIcon icon={faStar} />
-                      {skill.name}
-                    </SkillTag>
-                  )
-                )}
-              </SkillTags>
-            </SkillsContainer>
+
+          <AboutText $visible={inView}>
+            <h3 style={{ 
+              fontSize: '1.8rem', 
+              marginBottom: '1.5rem', 
+              color: '#2D3748' 
+            }}>
+              Turning Data into Decisions
+            </h3>
+            <p style={{ 
+              fontSize: '1.1rem', 
+              lineHeight: '1.8', 
+              marginBottom: '2rem', 
+              color: '#4A5568' /* Softer grey for body text readability */
+            }}>
+              I am a Data Scientist focused on bridging the gap between complex 
+              technical analysis and strategic business value[cite: 36]. Currently pursuing 
+              my MSc in AI, I specialize in building predictive models that 
+              don't just work, but tell a story.
+            </p>
+            
+            <div style={{ 
+              display: 'flex', 
+              flexWrap: 'wrap', 
+              gap: '0.8rem', 
+              justifyContent: 'flex-start' 
+            }}>
+              {skills.map((skill, index) => (
+                <SkillTag key={index}>
+                  <FontAwesomeIcon icon={faStar} size="xs" />
+                  {skill}
+                </SkillTag>
+              ))}
+            </div>
           </AboutText>
         </AboutContent>
       </Container>

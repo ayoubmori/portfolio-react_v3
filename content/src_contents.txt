@@ -1,0 +1,2173 @@
+--- FILE: App.css ---
+
+/* All styles are handled by styled-components */
+
+================================================================================
+
+--- FILE: App.jsx ---
+
+import React from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/theme';
+import { GlobalStyle } from './styles/GlobalStyle';
+import { Analytics } from "@vercel/analytics/react";
+
+import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import About from './components/About/About';
+import Skills from './components/Skills/Skills';
+import Projects from './components/Projects/Projects';
+import Contact from './components/Contact/Contact';
+import Footer from './components/Footer/Footer';
+
+function App() {
+  return (
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <Helmet>
+          <title>Ayoub Taouabi | Portfolio - Data Scientist & AI Specialist</title>
+          <meta name="description" content="Official portfolio of Ayoub Taouabi. Data Scientist specializing in Python, SQL, Machine Learning, and Data Visualization." />
+          <meta name="keywords" content="Data Scientist, AI, Python, Portfolio, Ayoub Taouabi, Machine Learning" />
+        </Helmet>
+        <GlobalStyle />
+        <Analytics />
+        <Navbar />
+        <main>
+          <Home />
+          <About />
+          <Skills />
+          <Projects />
+          <Contact />
+        </main>
+        <Footer />
+      </ThemeProvider>
+    </HelmetProvider>
+  );
+}
+
+export default App;
+
+================================================================================
+
+--- FILE: index.css ---
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #4338CA;
+  --primary-dark: #3730A3;
+  --text-primary: #2D3748;
+  --text-secondary: #4A5568;
+  --background-light: #F8F9FA;
+  --white: #FFFFFF;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+================================================================================
+
+--- FILE: main.jsx ---
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+
+================================================================================
+
+--- FILE: assets\react.svg ---
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+
+================================================================================
+
+--- FILE: components\About\About.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
+const AboutSection = styled.section`
+  min-height: 100vh;
+  padding: 6rem 2rem;
+  /* FIXED: Pure white background as requested */
+  background: ${({ theme }) => theme.colors.background.white}; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the H2 title relative to the container */
+`;
+
+const AboutContent = styled.div`
+  display: flex;
+  /* FIXED: align-items center ensures text and image are perfectly leveled horizontally */
+  align-items: center; 
+  justify-content: center;
+  gap: clamp(2rem, 8vw, 5rem);
+  width: 100%;
+
+  @media (max-width: 968px) {
+    flex-direction: column;
+    text-align: center;
+  }
+`;
+
+const AboutImageContainer = styled.div`
+  flex: 0 0 400px; 
+  max-width: 100%;
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateX(${props => props.$visible ? '0' : '-50px'});
+  transition: all 0.8s ease-out;
+  position: relative;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  overflow: hidden;
+  /* Added a subtle shadow so the white card pops against the white bg */
+  box-shadow: ${({ theme }) => theme.shadows.lg}; 
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 120%; 
+  }
+
+  @media (max-width: 968px) {
+    flex: 0 0 auto;
+    width: 280px;
+    margin-bottom: 2rem;
+  }
+`;
+
+const StyledAboutImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const AboutText = styled.div`
+  flex: 1;
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateX(${props => props.$visible ? '0' : '50px'});
+  transition: all 0.8s ease-out;
+  /* FIXED: Dark text for high visibility on white background */
+  color: ${({ theme }) => theme.colors.text.dark}; 
+`;
+
+const SkillTag = styled.span`
+  background: ${({ theme }) => theme.colors.primary};
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const About = () => {
+  const { ref: contentRef, inView } = useInView({ threshold: 0.2, triggerOnce: true });
+
+  const skills = [
+    "Machine Learning", "Data Storytelling", "Critical Thinking", 
+    "Problem Solving", "Cloud Computing", "SQL & Python"
+  ];
+
+  return (
+    <AboutSection id="about">
+      <Container>
+        {/* FIXED: Title color set to dark grey/black for visibility */}
+        <h2 style={{ 
+          textAlign: 'center', 
+          fontSize: 'clamp(2.3rem, 5vw, 3rem)', 
+          marginBottom: '4rem',
+          color: '#333333',
+          fontWeight: '700'
+        }}>
+          About <span style={{ color: '#4338CA' }}>Me</span>
+        </h2>
+        
+        <AboutContent ref={contentRef}>
+          <AboutImageContainer $visible={inView}>
+            <StyledAboutImage
+              src="/images/profil_pic_extend.jpg"
+              alt="Ayoub Taouabi - Data Scientist Portfolio"
+            />
+          </AboutImageContainer>
+
+          <AboutText $visible={inView}>
+            <h3 style={{ 
+              fontSize: '1.8rem', 
+              marginBottom: '1.5rem', 
+              color: '#2D3748' 
+            }}>
+              Turning Data into Decisions
+            </h3>
+            <p style={{ 
+              fontSize: '1.1rem', 
+              lineHeight: '1.8', 
+              marginBottom: '2rem', 
+              color: '#4A5568' /* Softer grey for body text readability */
+            }}>
+              I am a Data Scientist focused on bridging the gap between complex 
+              technical analysis and strategic business value[cite: 36]. Currently pursuing 
+              my MSc in AI, I specialize in building predictive models that 
+              don't just work, but tell a story.
+            </p>
+            
+            <div style={{ 
+              display: 'flex', 
+              flexWrap: 'wrap', 
+              gap: '0.8rem', 
+              justifyContent: 'flex-start' 
+            }}>
+              {skills.map((skill, index) => (
+                <SkillTag key={index}>
+                  <FontAwesomeIcon icon={faStar} size="xs" />
+                  {skill}
+                </SkillTag>
+              ))}
+            </div>
+          </AboutText>
+        </AboutContent>
+      </Container>
+    </AboutSection>
+  );
+};
+
+export default About;
+
+================================================================================
+
+--- FILE: components\Contact\Contact.jsx ---
+
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { sendEmail } from '../../utils/emailjs';
+import Spinner from '../shared/Spinner';
+
+const ContactSection = styled.section`
+  padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  background: ${({ theme }) => theme.colors.background.light};
+`;
+
+const ContactDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing[6]};
+  margin-bottom: ${({ theme }) => theme.spacing[12]};
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
+  transition: all 0.6s ease-out;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const ContactLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
+  color: ${({ theme }) => theme.colors.primary};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[5]};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: ${({ theme }) => theme.transitions.default};
+  font-weight: 500;
+  background: white;
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    background: ${({ theme }) => theme.colors.secondary};
+  }
+
+  &.resume-btn {
+    background: ${({ theme }) => theme.colors.primary};
+    color: white;
+    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; }
+  }
+`;
+
+const ContactForm = styled.form`
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
+  transition: all 0.6s ease-out 0.2s;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  &:focus { outline: none; border-color: ${({ theme }) => theme.colors.primary}; }
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  padding: 0.8rem;
+  min-height: 150px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+`;
+
+const Contact = () => {
+  const [formData, setFormData] = useState({ from_name: '', reply_to: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await sendEmail(formData);
+      setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
+      setFormData({ from_name: '', reply_to: '', message: '' });
+    } catch {
+      setStatus({ type: 'error', message: 'Something went wrong. Please try again.' });
+    }
+    setIsSubmitting(false);
+  };
+
+  return (
+    <ContactSection id="contact">
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem' }}>Get In Touch</h2>
+        <p style={{ textAlign: 'center', marginBottom: '3rem', color: '#666' }}>
+          Open for collaborations or data science opportunities!
+        </p>
+
+        <ContactDetails ref={ref} $visible={inView}>
+          <ContactLink href="mailto:ayoubtaouabi66@gmail.com">
+            <FontAwesomeIcon icon={faEnvelope} /> Email
+          </ContactLink>
+          <ContactLink href="https://www.linkedin.com/in/ayoub-taouabi/" target="_blank">
+            <FontAwesomeIcon icon={faLinkedin} /> LinkedIn
+          </ContactLink>
+          <ContactLink 
+            href="https://drive.google.com/file/d/1ixzYShWU6FmOkJOmeqhblZuyUoPFe5hc/view?usp=sharing" 
+            target="_blank" 
+            className="resume-btn"
+          >
+            <FontAwesomeIcon icon={faEye} /> View Resume
+          </ContactLink>
+        </ContactDetails>
+
+        <ContactForm $visible={inView} onSubmit={handleSubmit}>
+          <Input 
+            type="text" placeholder="Your Name" required 
+            value={formData.from_name} 
+            onChange={(e) => setFormData({...formData, from_name: e.target.value})} 
+          />
+          <Input 
+            type="email" placeholder="Your Email" required 
+            value={formData.reply_to} 
+            onChange={(e) => setFormData({...formData, reply_to: e.target.value})} 
+          />
+          <Textarea 
+            placeholder="Your Message" required 
+            value={formData.message} 
+            onChange={(e) => setFormData({...formData, message: e.target.value})} 
+          />
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            style={{ width: '100%', padding: '1rem', background: '#4338CA', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+          >
+            {isSubmitting ? <Spinner /> : 'Send Message'}
+          </button>
+          {status && (
+            <div style={{ marginTop: '1rem', textAlign: 'center', color: status.type === 'success' ? 'green' : 'red' }}>
+              {status.message}
+            </div>
+          )}
+        </ContactForm>
+      </div>
+    </ContactSection>
+  );
+};
+
+export default Contact;
+
+================================================================================
+
+--- FILE: components\Footer\Footer.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faMugHot } from '@fortawesome/free-solid-svg-icons';
+
+const FooterContainer = styled.footer`
+  background: ${({ theme }) => theme.colors.text.dark};
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+`;
+
+const FooterText = styled.p`
+  font-size: 0.9rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  .heart { color: #e25555; }
+  .coffee { color: #f8e076; }
+`;
+
+const Footer = () => {
+  return (
+    <FooterContainer>
+      <p style={{ fontWeight: 600 }}>Ayoub Taouabi</p>
+      <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
+        &copy; {new Date().getFullYear()} All Rights Reserved. [cite: 123-124]
+      </p>
+      <FooterText>
+        Designed with <FontAwesomeIcon icon={faHeart} className="heart" /> and 
+        <FontAwesomeIcon icon={faMugHot} className="coffee" /> [cite: 125]
+      </FooterText>
+    </FooterContainer>
+  );
+};
+
+export default Footer;
+
+================================================================================
+
+--- FILE: components\Home\Home.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-scroll'; // [cite: 76]
+import { useInView } from 'react-intersection-observer'; // [cite: 91]
+import ProfilePicture from '../shared/ProfilePicture';
+import SocialLinks from '../shared/SocialLinks';
+import { images, profileFallback } from '../../utils/images'; // [cite: 77]
+
+const HomeSection = styled.section`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 2rem; /* [cite: 78] */
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url('/images/background.jpg') center/cover no-repeat; /* [cite: 79] */
+`;
+
+const HomeContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem; /* [cite: 80] */
+
+  @media (max-width: 968px) {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 2rem;
+  }
+`;
+
+const HomeContent = styled.div`
+  flex: 1;
+  max-width: 600px;
+  opacity: ${props => props.$visible ? 1 : 0}; /* [cite: 81] */
+  transform: translateY(${props => props.$visible ? '0' : '30px'}); /* [cite: 82] */
+  transition: all 0.8s ease-out;
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2.5rem, 5vw, 3.5rem); 
+  color: #fff;
+  margin-bottom: 1rem; /*  */
+
+  span {
+    color: ${({ theme }) => theme.colors.primary}; /* [cite: 84] */
+  }
+`;
+
+// FIXED: Changed from 'p' to 'h2' for SEO keyword ranking
+const Subtitle = styled.h2`
+  font-size: 1.5rem;
+  color: #E0E7FF; /*  */
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem; /* [cite: 86] */
+
+  @media (max-width: 968px) {
+    justify-content: center;
+  }
+`;
+
+const StyledButton = styled(Link)`
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-weight: 600; /* [cite: 87] */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &.primary {
+    background: ${({ theme }) => theme.colors.primary};
+    color: white; /* [cite: 88] */
+    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } /* [cite: 89] */
+  }
+
+  &.secondary {
+    border: 2px solid white;
+    color: white;
+    &:hover { background: rgba(255, 255, 255, 0.1); } /* [cite: 90] */
+  }
+`;
+
+const Home = () => {
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true }); // [cite: 91]
+
+  return (
+    <HomeSection id="home">
+      <HomeContainer>
+        <HomeContent ref={ref} $visible={inView}>
+          <Title>Hi, I'm <span>Ayoub Taouabi</span></Title>
+          {/* SEO Improvement: Meaningful H2 Title */}
+          <Subtitle>Data Scientist & AI Specialist</Subtitle>
+          <p style={{ color: '#fff', marginBottom: '2rem', lineHeight: '1.6' }}>
+            Transforming complex data into strategic insights. I specialize in 
+            building analytical workflows and machine learning models that drive 
+            real-world impact through precision and storytelling.
+          </p>
+          <div style={{ marginBottom: '2rem' }}>
+            <SocialLinks />
+          </div>
+          <ButtonContainer>
+            <StyledButton to="projects" smooth={true} className="primary" aria-label="Navigate to projects section">
+              View My Projects
+            </StyledButton>
+            <StyledButton to="contact" smooth={true} className="secondary" aria-label="Navigate to contact section">
+              Get In Touch
+            </StyledButton>
+          </ButtonContainer>
+        </HomeContent>
+
+        <div style={{ flex: '0.8', display: 'flex', justifyContent: 'center' }}>
+          <ProfilePicture
+            src={images.profile}
+            /* SEO Improvement: Specific Alt Text */
+            alt="Ayoub Taouabi - Data Scientist and AI Specialist Professional Portfolio Image"
+            fallback={profileFallback}
+            size="clamp(250px, 30vw, 350px)" 
+          />
+        </div>
+      </HomeContainer>
+    </HomeSection>
+  ); // [cite: 92-96]
+};
+
+export default Home;
+
+================================================================================
+
+--- FILE: components\Navbar\Navbar.jsx ---
+
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-scroll';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+const Nav = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: ${({ $scrolled, theme }) => $scrolled ? theme.colors.background.white : 'transparent'};
+  box-shadow: ${({ $scrolled, theme }) => $scrolled ? theme.shadows.md : 'none'};
+  transition: ${({ theme }) => theme.transitions.default};
+`;
+
+const NavContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Logo = styled(Link)`
+  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  /* Logic: Use dark text when scrolled or primary text on transparent background */
+  color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
+  cursor: pointer;
+  text-decoration: none;
+`;
+
+const MenuButton = styled.button`
+  display: none;
+  background: none;
+  color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
+  font-size: 1.5rem;
+  z-index: 1100;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: block;
+  }
+`;
+
+const NavMenu = styled.ul`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[8]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    background: ${({ theme }) => theme.colors.background.dark};
+    transition: transform 0.3s ease-in-out;
+    transform: ${({ $isOpen }) => $isOpen ? 'translateY(0)' : 'translateY(-100%)'};
+    /* Fix: Allow scrolling if menu is taller than screen (landscape mode) */
+    overflow-y: auto;
+    padding: 2rem 0;
+  }
+`;
+
+const NavLink = styled(Link)`
+  color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover, &.active {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    color: white; /* Always white on mobile background */
+    font-size: 1.5rem;
+  }
+`;
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const closeMenu = () => setIsOpen(false);
+
+  return (
+    <Nav $scrolled={scrolled}>
+      <NavContainer>
+        <Logo to="home" smooth={true} $scrolled={scrolled} onClick={closeMenu}>
+          Ayoub Taouabi
+        </Logo>
+        <MenuButton onClick={() => setIsOpen(!isOpen)} $scrolled={scrolled} aria-label="Toggle Menu">
+          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+        </MenuButton>
+        <NavMenu $isOpen={isOpen}>
+          {['home', 'about', 'skills', 'projects', 'contact'].map((item) => (
+            <li key={item}>
+              <NavLink
+                to={item}
+                smooth={true}
+                duration={500}
+                spy={true}
+                offset={-70}
+                $scrolled={scrolled}
+                onClick={closeMenu}
+                activeClass="active"
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </NavLink>
+            </li>
+          ))}
+        </NavMenu>
+      </NavContainer>
+    </Nav>
+  );
+};
+
+export default Navbar;
+
+================================================================================
+
+--- FILE: components\Projects\ProjectModal.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import Modal from '../shared/Modal.jsx';
+import LazyImage from '../shared/LazyImage.jsx';
+
+const ModalTitle = styled.h2`
+  font-size: 2rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin-bottom: 1.5rem;
+`;
+
+const ImageGallery = styled.div`
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+`;
+
+const Description = styled.div`
+  margin: 2rem 0;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  line-height: 1.8;
+  font-size: 1.1rem;
+`;
+
+const TechStackGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+`;
+
+const Section = styled.div`
+  margin: 2rem 0;
+
+  h3 {
+    font-size: 1.25rem;
+    color: ${({ theme }) => theme.colors.text.primary};
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.25rem;
+      background: ${({ theme }) => theme.colors.primary};
+      border-radius: 2px;
+    }
+  }
+`;
+
+const TechCategory = styled.div`
+  background: ${({ theme }) => theme.colors.background.light};
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  h4 {
+    color: ${({ theme }) => theme.colors.text.primary};
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 1rem;
+      background: ${({ theme }) => theme.colors.primary};
+      border-radius: 2px;
+    }
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.text.secondary};
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    li {
+      background: rgba(67, 56, 202, 0.1);
+      color: ${({ theme }) => theme.colors.primary};
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+  }
+`;
+
+const TechStack = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+`;
+
+const TechTag = styled.span`
+  background: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+`;
+
+const Challenges = styled.ul`
+  list-style-position: inside;
+  margin: 1rem 0;
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  li {
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const Links = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+`;
+
+const LinkButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  min-width: 160px;
+
+  &.primary {
+    background: ${({ theme }) => theme.colors.primary};
+    color: white;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primaryDark};
+    }
+  }
+
+  &.secondary {
+    border: 2px solid ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary};
+      color: white;
+    }
+  }
+`;
+
+const ProjectModal = ({ isOpen, onClose, project }) => {
+  if (!project) return null;
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalTitle>{project.title}</ModalTitle>
+      
+      <ImageGallery>
+        <LazyImage
+          src={project.image}
+          alt={project.title}
+          height="400px"
+          objectFit="cover"
+        />
+      </ImageGallery>
+
+      <Description>{project.fullDescription || project.description}</Description>
+
+      {project.techStack && (
+        <Section>
+          <h3>Technical Stack & Implementation</h3>
+          <TechStackGrid>
+            {Object.entries(project.techStack).map(([category, data]) => (
+              <TechCategory key={category}>
+                <h4>{data.mainTag}</h4>
+                <p>{data.description}</p>
+                <ul>
+                  {data.subTags.map((tag, index) => (
+                    <li key={index}>{tag}</li>
+                  ))}
+                </ul>
+              </TechCategory>
+            ))}
+          </TechStackGrid>
+        </Section>
+      )}
+
+      {project.features && (
+        <Section>
+          <h3>Key Features</h3>
+          <ul>
+            {project.features.map((feature, index) => (
+              <li key={index}>{feature}</li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {project.challenges && (
+        <Section>
+          <h3>Challenges & Solutions</h3>
+          <Challenges>
+            {project.challenges.map((challenge, index) => (
+              <li key={index}>{challenge}</li>
+            ))}
+          </Challenges>
+        </Section>
+      )}
+
+      <Links>
+        {project.github && (
+          <LinkButton
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="secondary"
+          >
+            <FontAwesomeIcon icon={faGithub} /> View on GitHub
+          </LinkButton>
+        )}
+        {project.demo && (
+          <LinkButton
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="primary"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} /> Live Demo
+          </LinkButton>
+        )}
+      </Links>
+    </Modal>
+  );
+};
+
+export default ProjectModal;
+
+
+================================================================================
+
+--- FILE: components\Projects\Projects.jsx ---
+
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import LazyImage from '../shared/LazyImage';
+import ProjectModal from './ProjectModal';
+import { projectsData } from '../../data/projects';
+import { fallbackImage } from '../../utils/images';
+
+const ProjectsSection = styled.section`
+  padding: 6rem 2rem;
+  background: white;
+`;
+
+const ProjectsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+`;
+
+const ProjectCard = styled.div`
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  opacity: ${props => props.$visible ? 1 : 0};
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
+  transition-delay: ${props => props.$delay}ms;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: ${({ theme }) => theme.shadows.lg};
+  }
+`;
+
+const ProjectInfo = styled.div`
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const SeeMoreButton = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+
+  const handleOpenModal = (project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  return (
+    <ProjectsSection id="projects">
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem' }}>My Projects</h2>
+        <ProjectsGrid ref={ref}>
+          {projectsData.map((project, index) => (
+            <ProjectCard key={index} $visible={inView} $delay={index * 100}>
+              <LazyImage
+                src={project.image}
+                alt={project.title}
+                height="200px"
+                fallback={fallbackImage(project.title)}
+              />
+              <ProjectInfo>
+                <h3 style={{ marginBottom: '0.5rem' }}>{project.title}</h3>
+                <p style={{ color: '#4A5568', fontSize: '0.9rem', flex: 1 }}>{project.description}</p>
+                
+                <SeeMoreButton onClick={() => handleOpenModal(project)}>
+                  <FontAwesomeIcon icon={faInfoCircle} /> Details
+                </SeeMoreButton>
+
+                <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+                  {project.github && (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ color: '#333' }}>
+                      <FontAwesomeIcon icon={faGithub} size="lg" />
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ color: '#4338CA' }}>
+                      <FontAwesomeIcon icon={faExternalLinkAlt} size="lg" />
+                    </a>
+                  )}
+                </div>
+              </ProjectInfo>
+            </ProjectCard>
+          ))}
+        </ProjectsGrid>
+      </div>
+
+      <ProjectModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        project={selectedProject}
+      />
+    </ProjectsSection>
+  );
+};
+
+export default Projects;
+
+================================================================================
+
+--- FILE: components\Projects\TechTag.jsx ---
+
+
+
+================================================================================
+
+--- FILE: components\shared\LazyImage.jsx ---
+
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || 'auto'};
+  overflow: hidden;
+  background-color: #E0E7FF;
+  border-radius: ${props => props.borderRadius || '0'};
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: ${props => props.objectFit || 'cover'};
+  opacity: ${props => props.loaded ? 1 : 0};
+  transition: opacity 0.3s ease-in-out;
+  ${props => props.styles}
+`;
+
+const LoadingPlaceholder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #E0E7FF 0%,
+    #F1F5FF 50%,
+    #E0E7FF 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  opacity: ${props => props.isLoading ? 1 : 0};
+  transition: opacity 0.3s ease-in-out;
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+const LazyImage = ({ 
+  src, 
+  alt, 
+  fallback, 
+  width, 
+  height,
+  objectFit,
+  borderRadius,
+  styles,
+  ...props 
+}) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleLoad = () => {
+    setLoaded(true);
+  };
+
+  const handleError = () => {
+    setError(true);
+    if (fallback) {
+      setLoaded(true);
+    }
+  };
+
+  return (
+    <ImageWrapper 
+      width={width} 
+      height={height}
+      borderRadius={borderRadius}
+    >
+      <LoadingPlaceholder isLoading={!loaded} />
+      <StyledImage
+        src={error ? fallback : src}
+        alt={alt}
+        onLoad={handleLoad}
+        onError={handleError}
+        loading="lazy"
+        loaded={loaded}
+        objectFit={objectFit}
+        styles={styles}
+        {...props}
+      />
+    </ImageWrapper>
+  );
+};
+
+export default LazyImage;
+
+
+================================================================================
+
+--- FILE: components\shared\Modal.jsx ---
+
+import React, { useEffect, useCallback, useRef } from 'react';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 1000;
+  animation: ${fadeIn} 0.3s ease-out;
+  overflow-y: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 1rem;
+  }
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  width: 100%;
+  max-width: 1000px;
+  max-height: 90vh;
+  position: relative;
+  overflow-y: auto;
+  animation: ${slideIn} 0.3s ease-out;
+  padding: 2.5rem;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 1.5rem;
+    max-height: 85vh;
+  }
+
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.primary};
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.colors.primaryDark};
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  transition: ${({ theme }) => theme.transitions.default};
+  border-radius: 50%;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+`;
+
+const Modal = ({ isOpen, onClose, children }) => {
+  const modalRef = useRef(null);
+
+  const handleEscape = useCallback((e) => {
+    if (e.key === 'Escape') {
+      onClose();
+    }
+  }, [onClose]);
+
+  const handleClickOutside = useCallback((e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      onClose();
+    }
+  }, [onClose]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscape);
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, handleEscape, handleClickOutside]);
+
+  if (!isOpen) return null;
+
+  return (
+    <ModalOverlay>
+      <ModalContent ref={modalRef} role="dialog" aria-modal="true">
+        <CloseButton onClick={onClose} aria-label="Close modal" />
+        {children}
+      </ModalContent>
+    </ModalOverlay>
+  );
+};
+
+export default Modal;
+
+================================================================================
+
+--- FILE: components\shared\ProfilePicture.jsx ---
+
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import LazyImage from './LazyImage';
+
+const rotate = keyframes`
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+`;
+
+const Container = styled.div`
+  position: relative;
+  width: ${props => props.size || '300px'};
+  height: ${props => props.size || '300px'};
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+`;
+
+const CircleAnimation = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  border: 2px dashed ${({ theme }) => theme.colors.primary || '#4338CA'};
+  border-radius: 50%;
+  animation: ${rotate} 20s linear infinite;
+`;
+
+const PulseCircle = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  border: 3px solid ${({ theme }) => theme.colors.primary || '#4338CA'};
+  border-radius: 50%;
+  animation: ${pulse} 2s ease-in-out infinite;
+  opacity: 0.7;
+`;
+
+const StyledImage = styled(LazyImage)`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+`;
+
+const ProfilePicture = ({
+  src,
+  alt,
+  fallback,
+  size,
+  ...props
+}) => {
+  return (
+    <Container size={size}>
+      <CircleAnimation />
+      <PulseCircle />
+      <ImageWrapper>
+        <StyledImage
+          src={src}
+          alt={alt}
+          fallback={fallback}
+          objectFit="cover"
+          {...props}
+        />
+      </ImageWrapper>
+    </Container>
+  );
+};
+
+export default ProfilePicture;
+
+
+================================================================================
+
+--- FILE: components\shared\SocialLinks.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
+
+const SocialContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+`;
+
+const SocialList = styled.ul`
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+`;
+
+const SocialLink = styled.a`
+  color: #fff;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  
+  &:hover {
+    color: #fff;
+    background: ${({ theme }) => theme.colors.primary};
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(67, 56, 202, 0.3);
+  }
+`;
+
+const SocialLinks = () => {
+  const socialLinks = [
+    {
+      icon: <FaGithub />,
+      url: 'https://github.com/ayoubmori',
+      label: 'GitHub'
+    },
+    {
+      icon: <FaLinkedin />,
+      url: 'https://www.linkedin.com/in/ayoub-taouabi/',
+      label: 'LinkedIn'
+    },
+    {
+      icon: <FaTwitter />,
+      url: 'https://x.com/AyoUb73091760',
+      label: 'Twitter'
+    },
+    {
+      icon: <FaInstagram />,
+      url: 'https://www.instagram.com/ayoubtaouabi/',
+      label: 'Instagram'
+    }
+  ];
+
+  return (
+    <SocialContainer>
+      <SocialList>
+        {socialLinks.map((link, index) => (
+          <li key={index}>
+            <SocialLink
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.label}
+            >
+              {link.icon}
+            </SocialLink>
+          </li>
+        ))}
+      </SocialList>
+    </SocialContainer>
+  );
+};
+
+export default SocialLinks;
+
+
+================================================================================
+
+--- FILE: components\shared\Spinner.jsx ---
+
+import styled, { keyframes } from 'styled-components';
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled.div`
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: ${spin} 0.8s linear infinite;
+`;
+
+export default Spinner;
+
+
+================================================================================
+
+--- FILE: components\shared\Tooltip.jsx ---
+
+import React, { useState, useRef, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const TooltipWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const TooltipContent = styled.div`
+  position: absolute;
+  ${({ $position }) => {
+    switch ($position) {
+      case 'top':
+        return 'bottom: 100%; left: 50%; transform: translateX(-50%);';
+      case 'bottom':
+        return 'top: 100%; left: 50%; transform: translateX(-50%);';
+      case 'left':
+        return 'right: 100%; top: 50%; transform: translateY(-50%);';
+      case 'right':
+        return 'left: 100%; top: 50%; transform: translateY(-50%);';
+      default:
+        return 'bottom: 100%; left: 50%; transform: translateX(-50%);';
+    }
+  }}
+  margin: ${({ $position }) => 
+    $position === 'top' || $position === 'bottom' ? '10px 0' : '0 10px'};
+  padding: 8px 12px;
+  background: ${({ theme }) => theme.colors.text.primary};
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  animation: ${fadeIn} 0.2s ease-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    ${({ $position }) => {
+      switch ($position) {
+        case 'top':
+          return `
+            border-top-color: ${({ theme }) => theme.colors.text.primary};
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+          `;
+        case 'bottom':
+          return `
+            border-bottom-color: ${({ theme }) => theme.colors.text.primary};
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+          `;
+        case 'left':
+          return `
+            border-left-color: ${({ theme }) => theme.colors.text.primary};
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+          `;
+        case 'right':
+          return `
+            border-right-color: ${({ theme }) => theme.colors.text.primary};
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+          `;
+        default:
+          return `
+            border-top-color: ${({ theme }) => theme.colors.text.primary};
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+          `;
+      }
+    }}
+  }
+`;
+
+const Tooltip = ({ content, children, defaultPosition = 'top' }) => {
+  const [position, setPosition] = useState(defaultPosition);
+  const [show, setShow] = useState(false);
+  const tooltipRef = useRef(null);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const calculatePosition = () => {
+      if (!tooltipRef.current || !wrapperRef.current) return;
+
+      const tooltip = tooltipRef.current.getBoundingClientRect();
+      const wrapper = wrapperRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Check if tooltip would overflow viewport
+      if (defaultPosition === 'top' && wrapper.top < tooltip.height + 20) {
+        setPosition('bottom');
+      } else if (defaultPosition === 'bottom' && wrapper.bottom + tooltip.height + 20 > viewportHeight) {
+        setPosition('top');
+      } else if (defaultPosition === 'left' && wrapper.left < tooltip.width + 20) {
+        setPosition('right');
+      } else if (defaultPosition === 'right' && wrapper.right + tooltip.width + 20 > viewportWidth) {
+        setPosition('left');
+      } else {
+        setPosition(defaultPosition);
+      }
+    };
+
+    if (show) {
+      calculatePosition();
+      window.addEventListener('scroll', calculatePosition);
+      window.addEventListener('resize', calculatePosition);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', calculatePosition);
+      window.removeEventListener('resize', calculatePosition);
+    };
+  }, [show, defaultPosition]);
+
+  return (
+    <TooltipWrapper
+      ref={wrapperRef}
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      onFocus={() => setShow(true)}
+      onBlur={() => setShow(false)}
+    >
+      {children}
+      {show && (
+        <TooltipContent
+          ref={tooltipRef}
+          position={position}
+          role="tooltip"
+        >
+          {content}
+        </TooltipContent>
+      )}
+    </TooltipWrapper>
+  );
+};
+
+export default Tooltip;
+
+================================================================================
+
+--- FILE: components\Skills\Skills.jsx ---
+
+import React from 'react';
+import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { skillsData } from '../../data/skills'; 
+
+const SkillsSection = styled.section`
+  min-height: 100vh;
+  padding: 6rem 2rem;
+  /* RESTORED: Original dark gradient and fixed background image [cite: 278] */
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+    url('/images/background.jpg') center/cover no-repeat fixed;
+  color: white; /* [cite: 279] */
+  display: flex;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  max-width: ${({ theme }) => theme.breakpoints.xl};
+  margin: 0 auto;
+  width: 100%;
+`;
+
+const SkillsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[8]};
+  opacity: ${props => props.$visible ? 1 : 0}; /*  */
+  transform: translateY(${props => props.$visible ? '0' : '20px'});
+  transition: all 0.6s ease-out;
+`;
+
+const CategoryGroup = styled.div`
+  /* RESTORED: Glassmorphism effect for dark theme [cite: 283] */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  border: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const CategoryTitle = styled.h3`
+  font-size: 1.25rem;
+  color: white;
+  text-transform: capitalize;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 1.25rem;
+    background: ${({ theme }) => theme.colors.primary};
+    border-radius: 2px;
+  }
+`;
+
+const SkillsGrid = styled.div`
+  display: grid;
+  /* FIXED: Dynamic columns that resize automatically for mobile  */
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 1.5rem;
+`;
+
+const SkillCard = styled.div`
+  /* RESTORED: Dark card style [cite: 286-287] */
+  background: rgba(26, 26, 26, 0.8);
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: ${({ theme }) => theme.colors.primary}; /* [cite: 288-289] */
+    box-shadow: 0 0 15px ${({ theme }) => theme.colors.primary}44;
+  }
+`;
+
+const SkillName = styled.span`
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.75rem;
+  text-align: center;
+`;
+
+const Skills = () => {
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+
+  return (
+    <SkillsSection id="skills">
+      <Container>
+        {/* SEO: H2 with primary keywords [cite: 291] */}
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '4rem', 
+          fontSize: 'clamp(2.3rem, 5vw, 3rem)',
+          color: 'white'
+        }}>
+          My <span style={{ color: '#4338CA' }}>Skills</span>
+        </h2>
+
+        <SkillsContainer ref={ref} $visible={inView}>
+          {Object.entries(skillsData).map(([category, skills]) => (
+            <CategoryGroup key={category}>
+              {/* SEO: H3 for category keywords [cite: 292] */}
+              <CategoryTitle>
+                {category.replace(/([A-Z])/g, ' $1').trim()}
+              </CategoryTitle>
+              <SkillsGrid>
+                {skills.map((skill, index) => (
+                  <SkillCard key={index}>
+                    <FontAwesomeIcon 
+                      icon={skill.icon} 
+                      style={{ 
+                        fontSize: '1.8rem', 
+                        color: '#4338CA', 
+                        marginBottom: '0.5rem' 
+                      }} 
+                    />
+                    <SkillName>{skill.name}</SkillName>
+                  </SkillCard>
+                ))}
+              </SkillsGrid>
+            </CategoryGroup>
+          ))}
+        </SkillsContainer>
+      </Container>
+    </SkillsSection>
+  );
+};
+
+export default Skills;
+
+================================================================================
+
+--- FILE: components\Skills\Skills.jsx.new ---
+
+
+
+================================================================================
+
+--- FILE: components\Skills\Skills.jsx.temp ---
+
+
+
+================================================================================
+
+--- FILE: styles\GlobalStyle.js ---
+
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: ${({ theme }) => theme.typography.fontFamily.sans};
+    background: ${({ theme }) => theme.colors.background.dark};
+    color: ${({ theme }) => theme.colors.text.primary};
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+`;
+
+================================================================================
+
+--- FILE: styles\theme.js ---
+
+export const theme = {
+  colors: {
+    primary: '#4338CA',
+    primaryDark: '#3730A3',
+    secondary: '#E0E7FF',
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#4A5568',
+      dark: '#333333',
+    },
+    background: {
+      dark: '#000000',
+      light: '#F8F9FA',
+      white: '#FFFFFF',
+    },
+    success: { light: '#C6F6D5', dark: '#2F855A' },
+    error: { light: '#FED7D7', dark: '#C53030' },
+  },
+  shadows: {
+    sm: '0 2px 4px rgba(0,0,0,0.05)',
+    md: '0 4px 6px rgba(0,0,0,0.1)',
+    lg: '0 4px 20px rgba(0,0,0,0.1)',
+  },
+  spacing: {
+    0: '0', 1: '0.25rem', 2: '0.5rem', 3: '0.75rem',
+    4: '1rem', 6: '1.5rem', 8: '2rem', 12: '3rem',
+    16: '4rem', 24: '6rem',
+  },
+  typography: {
+    fontSize: {
+      sm: '0.875rem', base: '1rem', lg: '1.125rem',
+      xl: '1.25rem', '2xl': '1.5rem', '3xl': '1.875rem',
+      '4xl': '2.25rem',
+    },
+    fontFamily: {
+      sans: "'Poppins', sans-serif",
+      heading: "'Montserrat', sans-serif",
+    },
+    fontWeight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+  },
+  borderRadius: {
+    none: '0', sm: '0.125rem', md: '0.375rem',
+    lg: '0.5rem', xl: '0.75rem', full: '9999px',
+  },
+  transitions: {
+    default: 'all 0.3s ease-in-out',
+  },
+  breakpoints: {
+    sm: '640px', md: '768px', lg: '1024px', xl: '1280px',
+  },
+};
+
+================================================================================
+
+--- FILE: utils\emailjs.js ---
+
+import emailjs from 'emailjs-com';
+
+// Your EmailJS credentials
+const EMAILJS_USER_ID = 'yOD5gtvVCpaGdGqYJ';      // Your EmailJS public key
+const EMAILJS_SERVICE_ID = 'service_czvlyl5'; // Your EmailJS service ID
+const EMAILJS_TEMPLATE_ID = 'template_4infp5a'; // Your EmailJS template ID
+
+export const initEmailJS = () => {
+  emailjs.init(EMAILJS_USER_ID);
+};
+
+export const sendEmail = async (templateParams) => {
+  try {
+    const response = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+================================================================================
+
+--- FILE: utils\images.js ---
+
+import profileImg from '../assets/images/ayoub-img.jpg';
+import backgroundImg from '/images/background.jpg';
+import myScoreImg from '/images/my-score.png';
+import movieAppImg from '/images/movie_app_demo.jpg';
+import breastCancerImg from '/images/breast_canser_app.jpg';
+import coffeeShopImg from '/images/coffe-shop-sales.png';
+import weatherForecastImg from '/images/forcast-app.png';
+import weatherPredictionImg from '/images/predict_weather_model.jpg';
+
+export const images = {
+  profile: profileImg,
+  background: backgroundImg,
+  projects: {
+    myScore: myScoreImg,
+    movieApp: movieAppImg,
+    breastCancer: breastCancerImg,
+    coffeeShop: coffeeShopImg,
+    weatherForecast: weatherForecastImg,
+    weatherPrediction: weatherPredictionImg
+  }
+};
+
+export const fallbackImage = (text) => 
+  `https://placehold.co/600x400/E0E7FF/4338CA?text=${encodeURIComponent(text)}`;
+
+export const profileFallback = 
+  'https://placehold.co/400x400/EFEFEF/AAAAAA?text=Profile+Image';
+
+
+================================================================================
+

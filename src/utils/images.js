@@ -1,4 +1,5 @@
 import profileImg from '../assets/images/ayoub-img.jpg';
+import aboutImg from '/images/profil_pic_extend.jpg'; 
 import backgroundImg from '/images/background.jpg';
 import myScoreImg from '/images/my-score.png';
 import movieAppImg from '/images/movie_app_demo.jpg';
@@ -9,6 +10,7 @@ import weatherPredictionImg from '/images/predict_weather_model.jpg';
 
 export const images = {
   profile: profileImg,
+  about: aboutImg,
   background: backgroundImg,
   projects: {
     myScore: myScoreImg,

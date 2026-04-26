@@ -41,7 +41,7 @@ const TooltipContent = styled.div`
   font-size: 0.875rem;
   border-radius: 6px;
   white-space: nowrap;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.tooltip};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   pointer-events: none;
   animation: ${fadeIn} 0.2s ease-out;

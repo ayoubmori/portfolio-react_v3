@@ -9,10 +9,10 @@ const Nav = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.navbar};
   background: ${({ $scrolled, theme }) => $scrolled ? theme.colors.background.white : 'transparent'};
   box-shadow: ${({ $scrolled, theme }) => $scrolled ? theme.shadows.md : 'none'};
-  transition: all 0.3s ease-in-out;
+  transition: ${({ theme }) => theme.transitions.default};
 `;
 
 const NavContainer = styled.div`
@@ -27,6 +27,7 @@ const NavContainer = styled.div`
 const Logo = styled(Link)`
   font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  /* Logic: Use dark text when scrolled or primary text on transparent background */
   color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
   cursor: pointer;
   text-decoration: none;
@@ -35,11 +36,9 @@ const Logo = styled(Link)`
 const MenuButton = styled.button`
   display: none;
   background: none;
-  border: none;
   color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
   font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 1100;
+  z-index: ${({ theme }) => theme.zIndex.mobileMenu};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
@@ -50,28 +49,23 @@ const NavMenu = styled.ul`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[8]};
-  list-style: none;
-  margin: 0;
-  padding: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
+    flex-direction: column;
+    justify-content: center;
     background: ${({ theme }) => theme.colors.background.dark};
     transition: transform 0.3s ease-in-out;
     transform: ${({ $isOpen }) => $isOpen ? 'translateY(0)' : 'translateY(-100%)'};
+    /* Fix: Allow scrolling if menu is taller than screen (landscape mode) */
+    overflow-y: auto;
+    padding: 2rem 0;
   }
 `;
-
-const NavItem = styled.li``;
 
 const NavLink = styled(Link)`
   color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
@@ -79,18 +73,13 @@ const NavLink = styled(Link)`
   font-weight: 500;
   cursor: pointer;
   transition: color 0.3s ease;
-  padding: 0.5rem;
 
-  &:hover {
+  &:hover, &.active {
     color: ${({ theme }) => theme.colors.primary};
-  }
-  &.active {
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: white; /* Always white on mobile background */
     font-size: 1.5rem;
   }
 `;
@@ -100,28 +89,25 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
   return (
     <Nav $scrolled={scrolled}>
       <NavContainer>
-        <Logo to="home" smooth={true} duration={500} $scrolled={scrolled} onClick={closeMenu}>
+        <Logo to="home" smooth={true} $scrolled={scrolled} onClick={closeMenu}>
           Ayoub Taouabi
         </Logo>
-        <MenuButton onClick={toggleMenu} $scrolled={scrolled}>
+        <MenuButton onClick={() => setIsOpen(!isOpen)} $scrolled={scrolled} aria-label="Toggle Menu">
           <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
         </MenuButton>
         <NavMenu $isOpen={isOpen}>
           {['home', 'about', 'skills', 'projects', 'contact'].map((item) => (
-            <NavItem key={item}>
+            <li key={item}>
               <NavLink
                 to={item}
                 smooth={true}
@@ -130,10 +116,11 @@ const Navbar = () => {
                 offset={-70}
                 $scrolled={scrolled}
                 onClick={closeMenu}
+                activeClass="active"
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </NavLink>
-            </NavItem>
+            </li>
           ))}
         </NavMenu>
       </NavContainer>

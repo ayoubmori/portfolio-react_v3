@@ -29,7 +29,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.modal};
   animation: ${fadeIn} 0.3s ease-out;
   overflow-y: auto;
 
