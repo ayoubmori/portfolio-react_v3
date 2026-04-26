@@ -7,9 +7,12 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { sendEmail } from '../../utils/emailjs';
 import Spinner from '../shared/Spinner';
 
+// CHANGED: Background to dark gradient matching the Skills section
 const ContactSection = styled.section`
   padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
-  background: ${({ theme }) => theme.colors.background.light};
+  background: linear-gradient(rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.92)),
+    url('/images/background.jpg') center/cover no-repeat fixed;
+  color: white;
 `;
 
 const ContactDetails = styled.div`
@@ -28,28 +31,32 @@ const ContactDetails = styled.div`
   }
 `;
 
+// CHANGED: Button styling for dark mode
 const ContactLink = styled.a`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
-  color: ${({ theme }) => theme.colors.primary};
+  color: white;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[5]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   transition: ${({ theme }) => theme.transitions.default};
   font-weight: 500;
-  background: white;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
-    background: ${({ theme }) => theme.colors.secondary};
+    background: rgba(255, 255, 255, 0.1);
+    border-color: ${({ theme }) => theme.colors.primary}66;
   }
 
   &.resume-btn {
     background: ${({ theme }) => theme.colors.primary};
-    color: white;
-    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; }
+    border-color: ${({ theme }) => theme.colors.primary};
+    &:hover { 
+      background: ${({ theme }) => theme.colors.primaryDark};
+      border-color: ${({ theme }) => theme.colors.primaryDark};
+    }
   }
 `;
 
@@ -61,23 +68,73 @@ const ContactForm = styled.form`
   transition: all 0.6s ease-out 0.2s;
 `;
 
+// CHANGED: Input fields styled for dark mode
 const Input = styled.input`
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.8rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  &:focus { outline: none; border-color: ${({ theme }) => theme.colors.primary}; }
+  color: white;
+  font-family: inherit;
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus { 
+    outline: none; 
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: rgba(255, 255, 255, 0.05);
+  }
 `;
 
+// CHANGED: Textarea styled for dark mode
 const Textarea = styled.textarea`
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.8rem 1rem;
   min-height: 150px;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+  color: white;
   resize: vertical;
+  font-family: inherit;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus { 
+    outline: none; 
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: rgba(255, 255, 255, 0.05);
+  }
+`;
+
+// CHANGED: Submit button styling
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 1rem;
+  background: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: ${({ theme }) => theme.colors.primaryDark};
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `;
 
 const Contact = () => {
@@ -103,8 +160,18 @@ const Contact = () => {
   return (
     <ContactSection id="contact">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem' }}>Get In Touch</h2>
-        <p style={{ textAlign: 'center', marginBottom: '3rem', color: '#666' }}>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '2rem', /* Adjusted margin */
+          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+          color: 'white',
+          fontWeight: '700',
+          letterSpacing: '-1px'
+        }}>
+          Get <span style={{ color: '#4338CA' }}>In Touch</span>
+        </h2>
+        {/* CHANGED: Subtitle color to a lighter grey for better contrast */}
+        <p style={{ textAlign: 'center', marginBottom: '4rem', color: 'rgba(255, 255, 255, 0.6)' }}>
           Open for collaborations or data science opportunities!
         </p>
 
@@ -140,15 +207,19 @@ const Contact = () => {
             value={formData.message} 
             onChange={(e) => setFormData({...formData, message: e.target.value})} 
           />
-          <button 
+          <SubmitButton 
             type="submit" 
             disabled={isSubmitting}
-            style={{ width: '100%', padding: '1rem', background: '#4338CA', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
           >
             {isSubmitting ? <Spinner /> : 'Send Message'}
-          </button>
+          </SubmitButton>
           {status && (
-            <div style={{ marginTop: '1rem', textAlign: 'center', color: status.type === 'success' ? 'green' : 'red' }}>
+            <div style={{ 
+              marginTop: '1rem', 
+              textAlign: 'center', 
+              color: status.type === 'success' ? '#10B981' : '#EF4444', // Tailwind green/red colors
+              fontWeight: '500'
+            }}>
               {status.message}
             </div>
           )}

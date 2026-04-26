@@ -75,7 +75,16 @@ const Projects = () => {
   return (
     <ProjectsSection id="projects">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem' }}>My Projects</h2>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '5rem', 
+          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+          color: '#333333',
+          fontWeight: '700',
+          letterSpacing: '-1px'
+        }}>
+          Projects
+        </h2>
         <ProjectsGrid ref={ref}>
           {projectsData.map((project, index) => (
             <ProjectCard key={index} $visible={inView} $delay={index * 100}>

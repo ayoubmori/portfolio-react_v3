@@ -135,6 +135,7 @@ createRoot(document.getElementById('root')).render(
 --- FILE: components\About\About.jsx ---
 
 import React from 'react';
+import { images } from '../../utils/images';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -238,7 +239,7 @@ const About = () => {
 
   const skills = [
     "Machine Learning", "Data Storytelling", "Critical Thinking", 
-    "Problem Solving", "Cloud Computing", "SQL & Python"
+    "Problem Solving", "Data Mining", "SQL & Python"
   ];
 
   return (
@@ -258,7 +259,7 @@ const About = () => {
         <AboutContent ref={contentRef}>
           <AboutImageContainer $visible={inView}>
             <StyledAboutImage
-              src="/images/profil_pic_extend.jpg"
+              src={images.about}
               alt="Ayoub Taouabi - Data Scientist Portfolio"
             />
           </AboutImageContainer>
@@ -404,8 +405,9 @@ const Contact = () => {
       await sendEmail(formData);
       setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
       setFormData({ from_name: '', reply_to: '', message: '' });
-    } catch {
-      setStatus({ type: 'error', message: 'Something went wrong. Please try again.' });
+    } catch (error) {
+      console.error("Message submission failed:", error);
+      setStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
     }
     setIsSubmitting(false);
   };
@@ -413,7 +415,16 @@ const Contact = () => {
   return (
     <ContactSection id="contact">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem' }}>Get In Touch</h2>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '5rem', 
+          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+          color: 'white',
+          fontWeight: '700',
+          letterSpacing: '-1px'
+        }}>
+          Get <span style={{ color: '#4338CA' }}>In Touch</span>
+        </h2>
         <p style={{ textAlign: 'center', marginBottom: '3rem', color: '#666' }}>
           Open for collaborations or data science opportunities!
         </p>
@@ -669,7 +680,7 @@ const Nav = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.navbar};
   background: ${({ $scrolled, theme }) => $scrolled ? theme.colors.background.white : 'transparent'};
   box-shadow: ${({ $scrolled, theme }) => $scrolled ? theme.shadows.md : 'none'};
   transition: ${({ theme }) => theme.transitions.default};
@@ -698,7 +709,7 @@ const MenuButton = styled.button`
   background: none;
   color: ${({ $scrolled, theme }) => $scrolled ? theme.colors.text.dark : theme.colors.text.primary};
   font-size: 1.5rem;
-  z-index: 1100;
+  z-index: ${({ theme }) => theme.zIndex.mobileMenu};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
@@ -1144,7 +1155,16 @@ const Projects = () => {
   return (
     <ProjectsSection id="projects">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem' }}>My Projects</h2>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '5rem', 
+          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+          color: 'black',
+          fontWeight: '700',
+          letterSpacing: '-1px'
+        }}>
+          Projects
+        </h2>
         <ProjectsGrid ref={ref}>
           {projectsData.map((project, index) => (
             <ProjectCard key={index} $visible={inView} $delay={index * 100}>
@@ -1190,12 +1210,6 @@ const Projects = () => {
 };
 
 export default Projects;
-
-================================================================================
-
---- FILE: components\Projects\TechTag.jsx ---
-
-
 
 ================================================================================
 
@@ -1334,7 +1348,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.modal};
   animation: ${fadeIn} 0.3s ease-out;
   overflow-y: auto;
 
@@ -1733,7 +1747,7 @@ const TooltipContent = styled.div`
   font-size: 0.875rem;
   border-radius: 6px;
   white-space: nowrap;
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.tooltip};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   pointer-events: none;
   animation: ${fadeIn} 0.2s ease-out;
@@ -1864,88 +1878,76 @@ import { skillsData } from '../../data/skills';
 const SkillsSection = styled.section`
   min-height: 100vh;
   padding: 6rem 2rem;
-  /* RESTORED: Original dark gradient and fixed background image [cite: 278] */
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+  background: linear-gradient(rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.92)),
     url('/images/background.jpg') center/cover no-repeat fixed;
-  color: white; /* [cite: 279] */
   display: flex;
   align-items: center;
 `;
 
 const Container = styled.div`
-  max-width: ${({ theme }) => theme.breakpoints.xl};
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 `;
 
-const SkillsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[8]};
-  opacity: ${props => props.$visible ? 1 : 0}; /*  */
-  transform: translateY(${props => props.$visible ? '0' : '20px'});
-  transition: all 0.6s ease-out;
-`;
-
-const CategoryGroup = styled.div`
-  /* RESTORED: Glassmorphism effect for dark theme [cite: 283] */
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  padding: 2.5rem;
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const CategoryTitle = styled.h3`
-  font-size: 1.25rem;
-  color: white;
-  text-transform: capitalize;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  &::before {
-    content: '';
-    width: 4px;
-    height: 1.25rem;
-    background: ${({ theme }) => theme.colors.primary};
-    border-radius: 2px;
-  }
-`;
-
+// CHANGED: Switched to Flexbox to automatically center the last row
 const SkillsGrid = styled.div`
-  display: grid;
-  /* FIXED: Dynamic columns that resize automatically for mobile  */
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
+  opacity: ${props => props.$visible ? 1 : 0}; 
+  transform: translateY(${props => props.$visible ? '0' : '30px'});
+  transition: all 0.8s ease-out;
 `;
 
+// CHANGED: Added flex sizing and max-width to maintain card proportions
 const SkillCard = styled.div`
-  /* RESTORED: Dark card style [cite: 286-287] */
-  background: rgba(26, 26, 26, 0.8);
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 1.25rem 0.75rem;
+  flex: 1 1 320px; /* Allows cards to grow and shrink appropriately */
+  max-width: 340px; /* Prevents cards from stretching too wide */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1rem;
 
   &:hover {
     transform: translateY(-5px);
-    border-color: ${({ theme }) => theme.colors.primary}; /* [cite: 288-289] */
-    box-shadow: 0 0 15px ${({ theme }) => theme.colors.primary}44;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: ${({ theme }) => theme.colors.primary}66;
+    box-shadow: 0 10px 30px -10px rgba(67, 56, 202, 0.3);
   }
 `;
 
-const SkillName = styled.span`
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 0.75rem;
-  text-align: center;
+const CardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  svg {
+    font-size: 1.5rem;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  h3 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+`;
+
+const ToolsCaption = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
 `;
 
 const Skills = () => {
@@ -1954,59 +1956,36 @@ const Skills = () => {
   return (
     <SkillsSection id="skills">
       <Container>
-        {/* SEO: H2 with primary keywords [cite: 291] */}
         <h2 style={{ 
           textAlign: 'center', 
-          marginBottom: '4rem', 
-          fontSize: 'clamp(2.3rem, 5vw, 3rem)',
-          color: 'white'
+          marginBottom: '5rem', 
+          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+          color: 'white',
+          fontWeight: '700',
+          letterSpacing: '-1px'
         }}>
-          My <span style={{ color: '#4338CA' }}>Skills</span>
+          Technical <span style={{ color: '#4338CA' }}>Skills</span>
         </h2>
 
-        <SkillsContainer ref={ref} $visible={inView}>
-          {Object.entries(skillsData).map(([category, skills]) => (
-            <CategoryGroup key={category}>
-              {/* SEO: H3 for category keywords [cite: 292] */}
-              <CategoryTitle>
-                {category.replace(/([A-Z])/g, ' $1').trim()}
-              </CategoryTitle>
-              <SkillsGrid>
-                {skills.map((skill, index) => (
-                  <SkillCard key={index}>
-                    <FontAwesomeIcon 
-                      icon={skill.icon} 
-                      style={{ 
-                        fontSize: '1.8rem', 
-                        color: '#4338CA', 
-                        marginBottom: '0.5rem' 
-                      }} 
-                    />
-                    <SkillName>{skill.name}</SkillName>
-                  </SkillCard>
-                ))}
-              </SkillsGrid>
-            </CategoryGroup>
+        <SkillsGrid ref={ref} $visible={inView}>
+          {skillsData.map((category) => (
+            <SkillCard key={category.id}>
+              <CardHeader>
+                <FontAwesomeIcon icon={category.icon} />
+                <h3>{category.label}</h3>
+              </CardHeader>
+              <ToolsCaption>
+                {category.tools}
+              </ToolsCaption>
+            </SkillCard>
           ))}
-        </SkillsContainer>
+        </SkillsGrid>
       </Container>
     </SkillsSection>
   );
 };
 
 export default Skills;
-
-================================================================================
-
---- FILE: components\Skills\Skills.jsx.new ---
-
-
-
-================================================================================
-
---- FILE: components\Skills\Skills.jsx.temp ---
-
-
 
 ================================================================================
 
@@ -2102,9 +2081,19 @@ export const theme = {
   transitions: {
     default: 'all 0.3s ease-in-out',
   },
+  // breakpoints: {
+  //   sm: '640px', md: '768px', lg: '1024px', xl: '1280px',
+  // },
   breakpoints: {
     sm: '640px', md: '768px', lg: '1024px', xl: '1280px',
   },
+  zIndex: {
+    base: 1,
+    navbar: 1000,
+    mobileMenu: 1100,
+    modal: 1050,
+    tooltip: 1200,
+  }
 };
 
 ================================================================================
@@ -2113,34 +2102,28 @@ export const theme = {
 
 import emailjs from 'emailjs-com';
 
-// Your EmailJS credentials
-const EMAILJS_USER_ID = 'yOD5gtvVCpaGdGqYJ';      // Your EmailJS public key
-const EMAILJS_SERVICE_ID = 'service_czvlyl5'; // Your EmailJS service ID
-const EMAILJS_TEMPLATE_ID = 'template_4infp5a'; // Your EmailJS template ID
-
-export const initEmailJS = () => {
-  emailjs.init(EMAILJS_USER_ID);
-};
-
 export const sendEmail = async (templateParams) => {
   try {
     const response = await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      templateParams,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
     return response;
   } catch (error) {
+    // Adding a console log here helps you debug if it fails
+    console.error("EmailJS Error:", error);
     throw error;
   }
 };
-
 
 ================================================================================
 
 --- FILE: utils\images.js ---
 
 import profileImg from '../assets/images/ayoub-img.jpg';
+import aboutImg from '/images/profil_pic_extend.jpg'; 
 import backgroundImg from '/images/background.jpg';
 import myScoreImg from '/images/my-score.png';
 import movieAppImg from '/images/movie_app_demo.jpg';
@@ -2151,6 +2134,7 @@ import weatherPredictionImg from '/images/predict_weather_model.jpg';
 
 export const images = {
   profile: profileImg,
+  about: aboutImg,
   background: backgroundImg,
   projects: {
     myScore: myScoreImg,
