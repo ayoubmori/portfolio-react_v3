@@ -50,9 +50,6 @@ export const theme = {
   transitions: {
     default: 'all 0.3s ease-in-out',
   },
-  // breakpoints: {
-  //   sm: '640px', md: '768px', lg: '1024px', xl: '1280px',
-  // },
   breakpoints: {
     sm: '640px', md: '768px', lg: '1024px', xl: '1280px',
   },

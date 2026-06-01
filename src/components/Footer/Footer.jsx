@@ -28,11 +28,11 @@ const Footer = () => {
     <FooterContainer>
       <p style={{ fontWeight: 600 }}>Ayoub Taouabi</p>
       <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
-        &copy; {new Date().getFullYear()} All Rights Reserved. [cite: 123-124]
+        &copy; {new Date().getFullYear()} All Rights Reserved. 
       </p>
       <FooterText>
         Designed with <FontAwesomeIcon icon={faHeart} className="heart" /> and 
-        <FontAwesomeIcon icon={faMugHot} className="coffee" /> [cite: 125]
+        <FontAwesomeIcon icon={faMugHot} className="coffee" /> 
       </FooterText>
     </FooterContainer>
   );

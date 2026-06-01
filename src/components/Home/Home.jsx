@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-scroll'; // [cite: 76]
-import { useInView } from 'react-intersection-observer'; // [cite: 91]
+import { Link } from 'react-scroll'; 
+import { useInView } from 'react-intersection-observer'; 
 import ProfilePicture from '../shared/ProfilePicture';
 import SocialLinks from '../shared/SocialLinks';
-import { images, profileFallback } from '../../utils/images'; // [cite: 77]
+import { images, profileFallback } from '../../utils/images';
 
 const HomeSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem; /* [cite: 78] */
+  padding: 6rem 2rem; 
   background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url('/images/background.jpg') center/cover no-repeat; /* [cite: 79] */
+    url('/images/background.jpg') center/cover no-repeat; 
 `;
 
 const HomeContainer = styled.div`
@@ -22,7 +22,7 @@ const HomeContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem; /* [cite: 80] */
+  gap: 4rem; 
 
   @media (max-width: 968px) {
     flex-direction: column-reverse;
@@ -34,18 +34,18 @@ const HomeContainer = styled.div`
 const HomeContent = styled.div`
   flex: 1;
   max-width: 600px;
-  opacity: ${props => props.$visible ? 1 : 0}; /* [cite: 81] */
-  transform: translateY(${props => props.$visible ? '0' : '30px'}); /* [cite: 82] */
+  opacity: ${props => props.$visible ? 1 : 0}; 
+  transform: translateY(${props => props.$visible ? '0' : '30px'}); 
   transition: all 0.8s ease-out;
 `;
 
 const Title = styled.h1`
   font-size: clamp(2.5rem, 5vw, 3.5rem); 
   color: #fff;
-  margin-bottom: 1rem; /*  */
+  margin-bottom: 1rem; 
 
   span {
-    color: ${({ theme }) => theme.colors.primary}; /* [cite: 84] */
+    color: ${({ theme }) => theme.colors.primary}; 
   }
 `;
 
@@ -61,7 +61,7 @@ const Subtitle = styled.h2`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5rem;
-  margin-top: 2rem; /* [cite: 86] */
+  margin-top: 2rem; 
 
   @media (max-width: 968px) {
     justify-content: center;
@@ -71,25 +71,25 @@ const ButtonContainer = styled.div`
 const StyledButton = styled(Link)`
   padding: 0.8rem 2rem;
   border-radius: 8px;
-  font-weight: 600; /* [cite: 87] */
+  font-weight: 600; 
   cursor: pointer;
   transition: all 0.3s ease;
   
   &.primary {
     background: ${({ theme }) => theme.colors.primary};
-    color: white; /* [cite: 88] */
-    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } /* [cite: 89] */
+    color: white; 
+    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } 
   }
 
   &.secondary {
     border: 2px solid white;
     color: white;
-    &:hover { background: rgba(255, 255, 255, 0.1); } /* [cite: 90] */
+    &:hover { background: rgba(255, 255, 255, 0.1); } 
   }
 `;
 
 const Home = () => {
-  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true }); // [cite: 91]
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
     <HomeSection id="home">
@@ -97,7 +97,7 @@ const Home = () => {
         <HomeContent ref={ref} $visible={inView}>
           <Title>Hi, I'm <span>Ayoub Taouabi</span></Title>
           {/* SEO Improvement: Meaningful H2 Title */}
-          <Subtitle>Data Scientist & AI Specialist</Subtitle>
+          <Subtitle>Data Analyst | AI & Automation Developer</Subtitle>
           <p style={{ color: '#fff', marginBottom: '2rem', lineHeight: '1.6' }}>
             Transforming complex data into strategic insights. I specialize in 
             building analytical workflows and machine learning models that drive 
@@ -127,7 +127,7 @@ const Home = () => {
         </div>
       </HomeContainer>
     </HomeSection>
-  ); // [cite: 92-96]
+  ); 
 };
 
 export default Home;

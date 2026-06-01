@@ -18,7 +18,7 @@ function App() {
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <Helmet>
-          <title>Ayoub Taouabi | Portfolio - Data Scientist & AI Specialist</title>
+          <title>Ayoub Taouabi | Portfolio - Data Analyst | AI & Automation Developer</title>
           <meta name="description" content="Official portfolio of Ayoub Taouabi. Data Scientist specializing in Python, SQL, Machine Learning, and Data Visualization." />
           <meta name="keywords" content="Data Scientist, AI, Python, Portfolio, Ayoub Taouabi, Machine Learning" />
         </Helmet>

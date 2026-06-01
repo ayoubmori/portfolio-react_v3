@@ -7,6 +7,9 @@ import breastCancerImg from '/images/breast_canser_app.jpg';
 import coffeeShopImg from '/images/coffe-shop-sales.png';
 import weatherForecastImg from '/images/forcast-app.png';
 import weatherPredictionImg from '/images/predict_weather_model.jpg';
+import pricePredictionImg from '/images/price_prediction_demo.jpg';
+import kioskImg from '/images/kiosks.jpg';
+import casabusImg from '/images/casabus.png';
 
 export const images = {
   profile: profileImg,
@@ -18,7 +21,10 @@ export const images = {
     breastCancer: breastCancerImg,
     coffeeShop: coffeeShopImg,
     weatherForecast: weatherForecastImg,
-    weatherPrediction: weatherPredictionImg
+    weatherPrediction: weatherPredictionImg,
+    pricePrediction: pricePredictionImg,
+    kiosk:kioskImg,
+    casabus:casabusImg,
   }
 };
 

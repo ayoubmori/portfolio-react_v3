@@ -8,7 +8,7 @@ import LazyImage from '../shared/LazyImage.jsx';
 
 const ModalTitle = styled.h2`
   font-size: 2rem;
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: ${({ theme }) => theme.colors.text.dark};
   margin-bottom: 1.5rem;
 `;
 
@@ -37,7 +37,7 @@ const Section = styled.div`
 
   h3 {
     font-size: 1.25rem;
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.text.dark};
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -52,9 +52,30 @@ const Section = styled.div`
       border-radius: 2px;
     }
   }
+
+  /* ADD THIS BLOCK BELOW TO FIX THE TEXT COLORS */
+  p, li {
+    color: ${({ theme }) => theme.colors.text.secondary};
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  ul, ol {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    
+    &::marker {
+      color: ${({ theme }) => theme.colors.primary}; /* Optional: gives your bullet points your nice theme color */
+    }
+  }
 `;
 
 const TechCategory = styled.div`
+  /* ... keeping your existing background, border-radius, etc. ... */
   background: ${({ theme }) => theme.colors.background.light};
   border-radius: 8px;
   padding: 1.5rem;
@@ -68,7 +89,7 @@ const TechCategory = styled.div`
   }
 
   h4 {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.text.dark};
     margin-bottom: 1rem;
     font-size: 1.1rem;
     display: flex;

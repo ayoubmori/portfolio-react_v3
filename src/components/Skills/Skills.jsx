@@ -14,27 +14,46 @@ const SkillsSection = styled.section`
 `;
 
 const Container = styled.div`
-  max-width: 1100px;
+  max-width: 1200px; /* INCREASED from 1100px so 3 wider cards fit perfectly */
   margin: 0 auto;
   width: 100%;
 `;
 
-// CHANGED: Switched to Flexbox to automatically center the last row
+/* ADDED: Clean styled component to replace your inline h2 styles */
+const SectionTitle = styled.h2`
+  text-align: center;
+  margin-bottom: 5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: white;
+  font-weight: 700;
+  letter-spacing: -1px;
+
+  span {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+// CHANGED: Switched to CSS Grid for strict column control
 const SkillsGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* STRICTLY 3 EQUAL COLUMNS */
+  gap: 2rem; /* Nice breathing room between cards */
   opacity: ${props => props.$visible ? 1 : 0}; 
   transform: translateY(${props => props.$visible ? '0' : '30px'});
   transition: all 0.8s ease-out;
+
+  /* Makes it responsive! */
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr); /* Drops to 2 columns on tablets */
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Drops to 1 column on mobile */
+  }
 `;
 
-// CHANGED: Added flex sizing and max-width to maintain card proportions
 const SkillCard = styled.div`
-  flex: 1 1 320px; /* Allows cards to grow and shrink appropriately */
-  max-width: 340px; /* Prevents cards from stretching too wide */
-  width: 100%;
+  /* Removed the width/flex constraints because Grid handles sizing now */
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   padding: 2rem;
@@ -85,16 +104,10 @@ const Skills = () => {
   return (
     <SkillsSection id="skills">
       <Container>
-        <h2 style={{ 
-          textAlign: 'center', 
-          marginBottom: '5rem', 
-          fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-          color: 'white',
-          fontWeight: '700',
-          letterSpacing: '-1px'
-        }}>
-          Technical <span style={{ color: '#4338CA' }}>Skills</span>
-        </h2>
+        {/* CLEANED UP: Using the styled component instead of inline styles */}
+        <SectionTitle>
+          Technical <span>Skills</span>
+        </SectionTitle>
 
         <SkillsGrid ref={ref} $visible={inView}>
           {skillsData.map((category) => (

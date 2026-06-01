@@ -279,7 +279,7 @@ const About = () => {
               color: '#4A5568' /* Softer grey for body text readability */
             }}>
               I am a Data Scientist focused on bridging the gap between complex 
-              technical analysis and strategic business value[cite: 36]. Currently pursuing 
+              technical analysis and strategic business value. Currently pursuing 
               my MSc in AI, I specialize in building predictive models that 
               don't just work, but tell a story.
             </p>
@@ -319,9 +319,12 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { sendEmail } from '../../utils/emailjs';
 import Spinner from '../shared/Spinner';
 
+// CHANGED: Background to dark gradient matching the Skills section
 const ContactSection = styled.section`
   padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
-  background: ${({ theme }) => theme.colors.background.light};
+  background: linear-gradient(rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.92)),
+    url('/images/background.jpg') center/cover no-repeat fixed;
+  color: white;
 `;
 
 const ContactDetails = styled.div`
@@ -340,28 +343,32 @@ const ContactDetails = styled.div`
   }
 `;
 
+// CHANGED: Button styling for dark mode
 const ContactLink = styled.a`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
-  color: ${({ theme }) => theme.colors.primary};
+  color: white;
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[5]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   transition: ${({ theme }) => theme.transitions.default};
   font-weight: 500;
-  background: white;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
-    background: ${({ theme }) => theme.colors.secondary};
+    background: rgba(255, 255, 255, 0.1);
+    border-color: ${({ theme }) => theme.colors.primary}66;
   }
 
   &.resume-btn {
     background: ${({ theme }) => theme.colors.primary};
-    color: white;
-    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; }
+    border-color: ${({ theme }) => theme.colors.primary};
+    &:hover { 
+      background: ${({ theme }) => theme.colors.primaryDark};
+      border-color: ${({ theme }) => theme.colors.primaryDark};
+    }
   }
 `;
 
@@ -373,23 +380,73 @@ const ContactForm = styled.form`
   transition: all 0.6s ease-out 0.2s;
 `;
 
+// CHANGED: Input fields styled for dark mode
 const Input = styled.input`
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.8rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  &:focus { outline: none; border-color: ${({ theme }) => theme.colors.primary}; }
+  color: white;
+  font-family: inherit;
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus { 
+    outline: none; 
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: rgba(255, 255, 255, 0.05);
+  }
 `;
 
+// CHANGED: Textarea styled for dark mode
 const Textarea = styled.textarea`
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.8rem 1rem;
   min-height: 150px;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
+  color: white;
   resize: vertical;
+  font-family: inherit;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus { 
+    outline: none; 
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: rgba(255, 255, 255, 0.05);
+  }
+`;
+
+// CHANGED: Submit button styling
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 1rem;
+  background: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: ${({ theme }) => theme.colors.primaryDark};
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `;
 
 const Contact = () => {
@@ -417,7 +474,7 @@ const Contact = () => {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{ 
           textAlign: 'center', 
-          marginBottom: '5rem', 
+          marginBottom: '2rem', /* Adjusted margin */
           fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
           color: 'white',
           fontWeight: '700',
@@ -425,7 +482,8 @@ const Contact = () => {
         }}>
           Get <span style={{ color: '#4338CA' }}>In Touch</span>
         </h2>
-        <p style={{ textAlign: 'center', marginBottom: '3rem', color: '#666' }}>
+        {/* CHANGED: Subtitle color to a lighter grey for better contrast */}
+        <p style={{ textAlign: 'center', marginBottom: '4rem', color: 'rgba(255, 255, 255, 0.6)' }}>
           Open for collaborations or data science opportunities!
         </p>
 
@@ -461,15 +519,19 @@ const Contact = () => {
             value={formData.message} 
             onChange={(e) => setFormData({...formData, message: e.target.value})} 
           />
-          <button 
+          <SubmitButton 
             type="submit" 
             disabled={isSubmitting}
-            style={{ width: '100%', padding: '1rem', background: '#4338CA', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
           >
             {isSubmitting ? <Spinner /> : 'Send Message'}
-          </button>
+          </SubmitButton>
           {status && (
-            <div style={{ marginTop: '1rem', textAlign: 'center', color: status.type === 'success' ? 'green' : 'red' }}>
+            <div style={{ 
+              marginTop: '1rem', 
+              textAlign: 'center', 
+              color: status.type === 'success' ? '#10B981' : '#EF4444', // Tailwind green/red colors
+              fontWeight: '500'
+            }}>
               {status.message}
             </div>
           )}
@@ -515,11 +577,11 @@ const Footer = () => {
     <FooterContainer>
       <p style={{ fontWeight: 600 }}>Ayoub Taouabi</p>
       <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
-        &copy; {new Date().getFullYear()} All Rights Reserved. [cite: 123-124]
+        &copy; {new Date().getFullYear()} All Rights Reserved. 
       </p>
       <FooterText>
         Designed with <FontAwesomeIcon icon={faHeart} className="heart" /> and 
-        <FontAwesomeIcon icon={faMugHot} className="coffee" /> [cite: 125]
+        <FontAwesomeIcon icon={faMugHot} className="coffee" /> 
       </FooterText>
     </FooterContainer>
   );
@@ -533,19 +595,19 @@ export default Footer;
 
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-scroll'; // [cite: 76]
-import { useInView } from 'react-intersection-observer'; // [cite: 91]
+import { Link } from 'react-scroll'; 
+import { useInView } from 'react-intersection-observer'; 
 import ProfilePicture from '../shared/ProfilePicture';
 import SocialLinks from '../shared/SocialLinks';
-import { images, profileFallback } from '../../utils/images'; // [cite: 77]
+import { images, profileFallback } from '../../utils/images';
 
 const HomeSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem; /* [cite: 78] */
+  padding: 6rem 2rem; 
   background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url('/images/background.jpg') center/cover no-repeat; /* [cite: 79] */
+    url('/images/background.jpg') center/cover no-repeat; 
 `;
 
 const HomeContainer = styled.div`
@@ -555,7 +617,7 @@ const HomeContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem; /* [cite: 80] */
+  gap: 4rem; 
 
   @media (max-width: 968px) {
     flex-direction: column-reverse;
@@ -567,18 +629,18 @@ const HomeContainer = styled.div`
 const HomeContent = styled.div`
   flex: 1;
   max-width: 600px;
-  opacity: ${props => props.$visible ? 1 : 0}; /* [cite: 81] */
-  transform: translateY(${props => props.$visible ? '0' : '30px'}); /* [cite: 82] */
+  opacity: ${props => props.$visible ? 1 : 0}; 
+  transform: translateY(${props => props.$visible ? '0' : '30px'}); 
   transition: all 0.8s ease-out;
 `;
 
 const Title = styled.h1`
   font-size: clamp(2.5rem, 5vw, 3.5rem); 
   color: #fff;
-  margin-bottom: 1rem; /*  */
+  margin-bottom: 1rem; 
 
   span {
-    color: ${({ theme }) => theme.colors.primary}; /* [cite: 84] */
+    color: ${({ theme }) => theme.colors.primary}; 
   }
 `;
 
@@ -594,7 +656,7 @@ const Subtitle = styled.h2`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1.5rem;
-  margin-top: 2rem; /* [cite: 86] */
+  margin-top: 2rem; 
 
   @media (max-width: 968px) {
     justify-content: center;
@@ -604,25 +666,25 @@ const ButtonContainer = styled.div`
 const StyledButton = styled(Link)`
   padding: 0.8rem 2rem;
   border-radius: 8px;
-  font-weight: 600; /* [cite: 87] */
+  font-weight: 600; 
   cursor: pointer;
   transition: all 0.3s ease;
   
   &.primary {
     background: ${({ theme }) => theme.colors.primary};
-    color: white; /* [cite: 88] */
-    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } /* [cite: 89] */
+    color: white; 
+    &:hover { background: ${({ theme }) => theme.colors.primaryDark}; } 
   }
 
   &.secondary {
     border: 2px solid white;
     color: white;
-    &:hover { background: rgba(255, 255, 255, 0.1); } /* [cite: 90] */
+    &:hover { background: rgba(255, 255, 255, 0.1); } 
   }
 `;
 
 const Home = () => {
-  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true }); // [cite: 91]
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
     <HomeSection id="home">
@@ -660,7 +722,7 @@ const Home = () => {
         </div>
       </HomeContainer>
     </HomeSection>
-  ); // [cite: 92-96]
+  ); 
 };
 
 export default Home;
@@ -1159,7 +1221,7 @@ const Projects = () => {
           textAlign: 'center', 
           marginBottom: '5rem', 
           fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-          color: 'black',
+          color: '#333333',
           fontWeight: '700',
           letterSpacing: '-1px'
         }}>
@@ -2100,9 +2162,17 @@ export const theme = {
 
 --- FILE: utils\emailjs.js ---
 
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 export const sendEmail = async (templateParams) => {
+  // 🚨 DIAGNOSTIC CHECK: Are the variables loading?
+  console.log("Diagnostic Check - Keys:", {
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+    paramsBeingSent: templateParams
+  });
+
   try {
     const response = await emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -2112,8 +2182,7 @@ export const sendEmail = async (templateParams) => {
     );
     return response;
   } catch (error) {
-    // Adding a console log here helps you debug if it fails
-    console.error("EmailJS Error:", error);
+    console.error("The exact reason it failed is:", error);
     throw error;
   }
 };
@@ -2131,6 +2200,9 @@ import breastCancerImg from '/images/breast_canser_app.jpg';
 import coffeeShopImg from '/images/coffe-shop-sales.png';
 import weatherForecastImg from '/images/forcast-app.png';
 import weatherPredictionImg from '/images/predict_weather_model.jpg';
+import pricePredictionImg from '/images/price_prediction_demo.jpg';
+import kioskImg from '/images/kiosks.jpg';
+import casabusImg from '/images/casabus.png';
 
 export const images = {
   profile: profileImg,
@@ -2142,7 +2214,10 @@ export const images = {
     breastCancer: breastCancerImg,
     coffeeShop: coffeeShopImg,
     weatherForecast: weatherForecastImg,
-    weatherPrediction: weatherPredictionImg
+    weatherPrediction: weatherPredictionImg,
+    pricePrediction: pricePredictionImg,
+    kiosk:kioskImg,
+    casabus:casabusImg,
   }
 };
 
